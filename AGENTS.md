@@ -71,8 +71,10 @@ DS2026/
 │       ├── H题_任务详解与约束.md          # 逐项任务要求、场地规格、器件约束
 │       ├── H题_器件选型方案.md            # 器件清单、AB板分工、TMC2209/ESP32-CAM规格、供电
 │       ├── 确认器件参数手册.md            # ★核心: 所有确认参数集中管理
-│       ├── A板_循迹小车逻辑建模.md        # A板循迹控制: 运动学、控制架构、状态机
-│       ├── B板_RM_A板资源与开发指南.md    # B板(F427)资源、样例分析、引脚规划
+│       ├── A板_ZET6引脚映射与分配.md      # ★核心: A板ZET6物理引脚布局与外设分配
+    │       ├── A板_循迹小车逻辑建模.md        # A板循迹控制: 运动学、控制架构、状态机
+    │       ├── H题_硬件与代码程序思路流.md      # 系统硬件→代码→控制→通信全链路流程
+    │       ├── B板_RM_A板资源与开发指南.md    # B板(F427)资源、样例分析、引脚规划
 │       ├── A_Board_Examples源码总结.md    # RM A板官方样例源码分析(4个样例)
 │       ├── ref参考资料总结.md            # ref工程/手册信息提取总结
 │       ├── ESP32-CAM_规格书提取.txt       # ESP32-CAM规格原文
@@ -92,7 +94,10 @@ DS2026/
     ├── Minebea 17PM-J.pdf              # 步进电机手册
     ├── A_Board_Examples_学习指南.md      # 样例学习指南(详细版)
     ├── A_Board_Examples_README.md
-    └── RM_A板_相关链接.md
+    ├── AS5600/                           # AS5600磁编码器资料
+    ├── RM_A板_相关链接.md
+    ├── CameraWebServer/                   # ESP32-CAM Web服务器固件(Arduino, 含WiFi配网+HTTP图传)
+    └── 2026电赛E题&H题解题技术方案....md    # 达尔闻E+H题解题方案(含H题建模+控制+调试)
 ```
 
 ---
@@ -105,8 +110,26 @@ DS2026/
 - **操作系统**: Windows
 
 ### A板 (循迹主控)
-- **开发板**: STM32F103ZET6
+- **开发板**: STM32F103ZET6最小系统板
 - **芯片**: STM32F103ZET6 (Cortex-M3, 72MHz, 512KB Flash, 64KB SRAM, 112 GPIO, 无FPU)
+- **工程路径**: `D:\HALcubemx\Apart_Board` (CubeIDE/CubeMX工程)
+- **板载独立接口**（用户确认）:
+  - USB_TTL: CH340 USB转串口，占用USART1(PA9/PA10)，用于printf调试
+  - USB_SL: STM32内置USB Device，占用PA11/PA12
+  - R/Tx排针: 与USB_TTL共用PA9/PA10，板上直接丝印标注
+- **物理排针**: 两侧各2列共4列（左侧=列1(外)+列2(内)，右侧=列3(内)+列4(外)），约119个排针位，引出109个GPIO
+- **缺失GPIO**: PB3, PC14, PC15 (PB3未引出，PC14/PC15板载32kHz晶振)
+- **引脚分配方案**（基于BluePill_Car参考，已解决PA9/USB_TTL冲突）:
+  - 编码器1: PA0/PA1 (TIM2_CH1/CH2)
+  - 编码器2: PA6/PA7 (TIM3_CH1/CH2)
+  - 电机PWM: PC6/PC7 (TIM8_CH1/CH2) ← 避开PA9与USB_TTL冲突
+  - 电机方向: PB12/PB13/PB14/PB15
+  - 红外循迹: PB4-PB9
+  - OLED I2C: PB10/PB11 (I2C2)
+  - 调试串口: PA9/PA10 (USART1, USB_TTL)
+  - B板通信: PA2/PA3 (USART2)
+  - 启动按键: PC13
+- **详细文档**: `doc/H题设计/A板_ZET6引脚映射与分配.md`
 
 ### B板 (摆杆控制主控)
 - **开发板**: RoboMaster A型板
@@ -256,7 +279,7 @@ DS2026/
 
 | 参考工程 | 目标平台 | 需映射内容 |
 |----------|----------|-----------|
-| BluePill_Car (F103C8T6) | A板 (F103ZET6) | 引脚重映射、外设重新配置、OLED驱动适配(SSD1315→SSD1306)、编码器PPR(13ppr) |
+| BluePill_Car (F103C8T6) | A板 (F103ZET6) | 引脚重映射(PWM TIM1→TIM8(PC6/PC7), 原因:PA9被USB_TTL占用)、外设重新配置(CubeMX)、OLED驱动适配(SSD1315→SSD1306)、编码器PPR(13ppr)、USART分工(USART1调试/USART2-B板通信)
 | A_Board-Examples (F427IIH6) | B板 (F427IIH6) | 直接可用，需适配CubeIDE for VSCode工程结构(原为Keil MDK) |
 | A_board_pwm_driver_test (F427) | B板 (F427IIH6) | 电机架构/UART协议/PWM驱动可直接复用 |
 

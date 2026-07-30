@@ -190,3 +190,54 @@ BluePill_Car用的是SSD1315(I2C)，用户A板用的是SSD1306(SPI 4线)。**驱
 ### 4.6 编码器PPR
 
 BluePill_Car工程文档写PPR=1320，但那是BluePill配的编码器。MG513XP28_12V的编码器PPR可能不同，**需确认。**
+
+---
+
+## 五、新增参考资料(2026-07-31)
+
+### 5.1 CameraWebServer — ESP32-CAM Web服务器固件
+
+**用途**: 可直接烧录到ESP32-CAM的出厂固件，实现WiFi配网和HTTP图传
+
+**文件清单**:
+- `CameraWebServer.ino` — Arduino主程序，初始化和启动Web服务器
+- `app_httpd.cpp` — HTTP服务器实现(662行)，包含所有Web端点逻辑
+- `camera_pins.h` — 多型号摄像头引脚定义
+- `camera_index.h` — 网页界面HTML(gzip压缩内嵌)
+
+**已确认配置**:
+- 摄像头型号: `CAMERA_MODEL_AI_THINKER` (AI Thinker ESP32-CAM)
+- WiFi: SSID `xiaoming` / 密码 `1.2.3.zzm`
+- 串口: 115200bps调试输出
+- 摄像头: 支持OV2640和OV3660(自动检测，/ 根路径自动选择对应HTML)
+
+**HTTP端点**:
+
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/` | GET | 摄像头设置Web界面(HTML) |
+| `/capture` | GET | 单帧JPEG抓拍 |
+| `/stream` | GET | MJPEG实时视频流(multipart/x-mixed-replace) |
+| `/control` | GET | 摄像头参数控制(?var=&val=，26个可控参数) |
+| `/status` | GET | 当前配置JSON状态 |
+
+**可控参数**: framesize, quality, contrast, brightness, saturation, gainceiling, colorbar, awb, agc, aec, hmirror, vflip, awb_gain, agc_gain, aec_value, aec2, dcw, bpc, wpc, raw_gma, lenc, special_effect, wb_mode, ae_level
+
+**附加功能**: 人脸检测(MTCNN, frame width≤400时启用)、人脸注册/识别(与H题无关)
+
+### 5.2 达尔闻E+H题解题技术方案
+
+**来源**: `2026电赛E题&H题解题技术方案（达尔闻）.md` (447行)
+
+**与H题相关的参考内容**:
+- 差速小车底盘方案
+- 摆杆执行机构(摇臂式)
+- K230/MaixCAM钢球视觉检测方案
+- 球杆系统动力学模型 + PID控制律(含前馈补偿)
+- 双闭环耦合控制策略(底盘运动环+球位置环)
+- ESP32-CAM独立图传方案
+- 测试策略与评分项分解
+- 标准化调试顺序
+- 常见故障及解决方案表
+
+**注意**: 该方案为达尔闻提供的参考解题思路，实际实施需以本项目的器件和配置为准。
