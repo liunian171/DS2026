@@ -1,0 +1,425 @@
+RoboMaster
+Development Board Type A
+开发板A型
+開発ボード タイプ A
+User Guide
+使用说明
+ユーザーガイド
+V1.2 2018.04
+Contents
+EN User Guide 2
+CH 使用说明 8
+JP ユーザーガイド 14
+2
+EN
+Disclaimer
+Thank you for purchasing the ROBOMASTER™ Development
+Board Type A (hereinafter referred to as “Board Type A”).
+Read this disclaimer carefully before using this product. By
+using this product, you hereby agree to this disclaimer and
+signify that you have read it fully. Install and use this product in
+strict accordance with this User Guide. SZ DJI TECHNOLOGY
+CO., LTD. and its affiliated companies assume no liability for
+damage(s) or injuries incurred directly or indirectly from using,
+installing or modifying this product improperly, including but
+not limited to using non-designated accessories.
+DJI™ and ROBOMASTER are trademarks of SZ DJI
+TECHNOLOGY CO., LTD. (abbreviated as “DJI”) and its
+affiliated companies. Names of products, brands, etc.,
+appearing in this document are trademarks or registered
+trademarks of their respective owner companies. This product
+and document are copyrighted by DJI with all rights reserved.
+No part of this product or document shall be reproduced in any
+form without the prior written consent or authorization of DJI.
+The final interpretation right of this disclaimer is reserved by
+DJI.
+Warning
+1. Visit the RoboMaster official website and download the
+RoboMaster Development Boards User Manual before use.
+Read and understand the whole manual, and then strictly
+follow the instructions in the manual when using the Board
+Type A.
+2. Connect the cables correctly by following the instructions
+in the RoboMaster Development Boards User Manual
+otherwise the connectors and the Board Type A may get
+seriously damaged.
+3. Make sure there are no short-circuits and all the cables are
+in good condition. DO NOT use cables that have been
+damaged in any way.
+4. Be sure to use the product in strict accordance with the
+specifications (including those for voltage, current, and
+temperature) listed in this document. Failure to do so may
+reduce the product service life or even lead to permanent
+3
+EN
+damage.
+5. Take measures to protect the Board Type A from static
+electricity and physical damage.
+6. Always keep the Board Type A clean otherwise a short-
+circuit may occur and the Board Type A's performance may
+be negatively affected.
+7. DO NOT use your hand to touch the chips on the Board
+Type A as doing so may damage the Board Type A and
+its performance may be negatively affected due to static
+electricity.
+8. If you detect any flames, smoke, strange smells, or other
+abnormality disconnect the Board Type A from the power
+source immediately.
+Introduction
+The RoboMaster Development Board Type A is a highly
+flexible controller board designed to be used in a wide
+range of robotics projects. It uses an STM32F427IIH6 as
+its main controller chip and features multiple extension and
+communication interfaces. It is compatible with the RoboMaster
+M3508 and M2006 Brushless DC Gear Motors, the RoboMaster
+UWB Locating System, the DJI Onboard SDK, and the DJI
+Manifold high-performance embedded computer.
+In the Box
+Board Type A × 1 Power Cable × 1
+SWD Cable × 1 2-Pin CAN Cable × 1
+4
+EN
+Overview
+1 2 1 345 6 6 6
+2
+23 7
+23 8
+1 9 10
+26
+25 11
+24
+1 1 1 2 3
+14
+8
+2 15
+231 223 122212019161817 16 16
+1. CAN1 Port 14. SWD Port
+2. Controllable Power 15. 3.3 V Power Holes
+Output Port 16. UART Port
+3. TF Card Slot 17. Reset Button
+4. DIP Switch for Voltage 18. Customizable LED × 2
+Adjustment 19. SDK UART Port
+5. SDK CAN2 Port 20. 5V Power Outlet Port
+6. CAN2 Port 21. 12V Power Source Indicators
+7. Signal Synchronization Port 22. BTUART Port
+8. PWM Port × 8 23. PWM Port
+9. USB Port 24. Power Input Port
+10. Customizable LED × 8 25. 12 V Power Output Port × 3
+11. OLED Port 26. GPIO Pin × 18 & 5 V Power
+12. D-Bus Port Source
+13. Customizable Button
+5
+EN
+The Board Type A's power supply block diagram is shown
+below.
+PowerTree
+24 V Power output @ Max 20 A Power output
+LM2511612 V@10 A XT30 Power supply
+MP2233 3.3 V@3 A 3.e3x tVe rPnoawl eeqr usiuppmpelyn tto
+TPS545405~12 V @ 5 A Variable power supply output PWM power supply × 16 TPS545405 V @ 2 A Communication port power supply CSeArNia lc coommmmuunnicicaatitoionn p poortrt
+MP2456GJ5 V@500 mA LP5907MFX 3.3 V@250 mA MCU
+LP5907MFX 3.3 V@250 mA IMU
+D-Bus + Buzzer
+tupni
+rewoP
+V 42
+dna
+rotrcoetctoertpo
+rypt ipraul-otrpa
+etssreveR
+Mounting the Board Type A
+Refer to the dimensions in the figure below when mounting the
+Board Type A.
+64
+Unit: mm
+85 23
+85
+4x 3.50
+6
+EN
+Usage
+The Board Type A is highly customizable. It can be connected
+to a wide variety of different devices and tailored to suit the
+needs of individual projects. The Board Type A supports
+firmware updating via DFU mode.
+Scan the QR code or go to https://www.robomaster.com/en-US/
+products/components/general/development-board#downloads
+to download the RoboMaster Development Boards User
+Manual for further information.
+Specifications
+Max Voltage 26 V
+Supported Battery Type 4S to 6S LiPo
+Max Operating Current* 20 A
+(continuous)
+Weight 1.54 oz (48 g)
+Dimensions (L×W) 3.35×2.28 in (85×58 mm)
+Operating Temperature Range 32° to 131° F (0° to 55° C)
+* Max operating current was tested in a laboratory
+environment. This value should be taken for reference only.
+7
+EN
+Pin Diagram of the Board Type A
+CH
+免责声明
+感谢您购买RoboMaster™ 开发板A型（以下简称“开发板A
+型”）。在使用之前，请仔细阅读本声明，一旦使用，即被视
+为对本声明全部内容的认可和接受。请严格遵守手册、产品说
+明和相关的法律法规、政策、准则安装和使用该产品。在使用
+产品过程中，用户承诺对自己的行为及因此而产生的所有后果
+负责。因用户不当使用、安装、改装造成的任何损失，DJI™
+将不承担法律责任。
+DJI和RoboMaster是深圳市大疆™创新科技有限公司及其
+关联公司的商标。本文出现的产品名称、品牌等，均为其所属
+公司的商标。本产品及手册为大疆创新版权所有。未经许可，
+不得以任何形式复制翻印。
+关于免责声明的最终解释权，归大疆创新所有。
+产品使用注意事项
+1. 使用前，请前往RoboMaster官网下载《RoboMaster开发
+板用户手册》，仔细阅读里面的注意事项并了解具体使用
+方法，然后再使用该产品。
+2. 请按照说明书正确连接线材，以免损坏接口以及开发板。
+3. 使用前请检查线材有无老化、短路。老化或短路的线材不
+适合继续使用。
+4. 请按照本文规定的工作环境（如电压、电流、温度等参数）
+使用，否则将会影响产品寿命或造成永久性损坏。
+5. 安装时注意做好保护，防止静电、物理损坏。
+6. 请保持开发板的干净整洁，避免由于异物造成短路或性能
+下降。
+7. 请不要用手直接接触开发板上的芯片，避免由于静电放电
+造成开发板损坏或性能下降。
+8. 开发板上电后如发现有火花、冒烟、焦糊味或其它异常，
+请立即关掉电源。
+8
+CH
+简 介
+RoboMaster开发板A型是一款面向机器人DIY的开源主控。
+开发板主控芯片为STM32F427IIH6，拥有丰富的扩展接口
+和通信接口，板载IMU传感器，可配合RoboMaster出品的
+M3508、M2006直流无刷减速电机以及UWB定位模块，亦
+可配合DJI 飞控SDK、妙算使用，配件丰富。开发板具有防
+反接和缓启动等多重保护。经过RoboMaster竞赛的打磨和
+改进，开发板不仅满足比赛机器人的控制需求，也非常适合
+用户DIY。
+物品清单
+开发板A型 × 1 电源线 × 1
+SWD下载线 × 1 2-Pin CAN线 × 1
+9
+CH
+接口说明
+1 2 1 345 6 6 6
+2
+23 7
+23 8
+1 9 10
+26
+25 11
+24
+1 1 1 2 3
+14
+8
+2 15
+231 223 122212019161817 16 16
+1. CAN1 14. SWD
+2. 可控电源输出接口 15. 3.3 V电源输出接口
+3. TF卡槽 16. UART
+4. 电压调节拨码 17. 复位按键
+5. SDK CAN2 18. 用户自定义LED×2
+6. CAN2 19. SDK UART
+7. 同步信号 20. 5 V电源输出接口
+8. PWM×8 21. 12 V电源指示灯
+9. USB 22. 蓝牙串口
+10. 用户自定义LED×8 23. PWM
+11. OLED 接口 24. 电源输入接口
+12. DBUS 25. 12 V电源输出接口 X 3
+13. 用户自定义按键 26. GPIO X 18 & 5 V 电源
+10
+CH
+开发板A型电源框图如下图所示：
+PowerTree
+24 V Power output @ Max 20 A 电源输出
+LM2511612 V@10 A XT30 供电
+MP2233 3.3 V@3 A 3.3 V 对外供电 TPS545405~12 V@5 A可调电源输出 2*8 路PWM供电
+TPS545405 V@2 A 5 V C串A口N通通讯讯接接口口
+MP2456GJ5 V@500 mA LP5907MFX 3.3 V@250 mA MCU
+LP5907MFX 3.3 V@250 mA IMU
+D-Bus + Buzzer
+11
+入输源电V
+42
+动启缓
+&接反防 通讯接口电源
+安装尺寸
+请按照下图开发板尺寸或参考开发板背面丝印尺寸将其
+安装于合适位置。
+64
+单位：mm
+85 23
+85
+4x 3.50
+CH
+使 用
+用户可按照自身需求，正确连接相应的接口，编写好对应
+的程序即可使用。开发板A型支持使用 DFU模式下载固
+件，请扫描下方二维码或前往官网https://www.robomaster.
+com/zh-CN/products/components/general/development-
+board#downloads下载《RoboMaster开发板用户手册》了解
+详细操作方法。请依据官网说明书正确连接电源和通讯接口。
+特征参数
+最大电压 26 V
+支持电池 4~6S LiPo
+最大允许输入电流*（持续） 20 A
+重量 48 g
+尺寸（长宽） 85 × 58 mm
+工作温度范围 0 ~ 55℃
+*室温25℃、通风良好的实验环境下测得。
+12
+CH
+丝印及引脚定义图：
+13
+JP
+免責事項
+この度はROBOMASTER™ 開発ボード タイプ A（以下、「ボ
+ード タイプ A」）をお買い上げいただき誠にありがとうござ
+います。本製品のご使用前に、この免責事項をよくお読みく
+ださい。本製品を使用すると、この免責事項をすべて読み、
+これに同意したものとみなされます。本製品は、このユーザ
+ーガイドに記載されているとおりに取り付けて使用してくだ
+さい。SZ DJI TECHNOLOGY CO., LTD. とその関連会社は、
+本製品が不適切な使用、取り付けまたは改造（指定外のアク セサリーの使用などが含まれます）により、直接または間接
+的な原因で生じた物的損害または人的被害についていかなる
+責任も負いません。
+DJI™およびROBOMASTERは、SZ DJI TECHNOLOGY CO.,
+LTD.（略して「DJI」）およびその関連会社の商標です。本書
+に記載されている製品、ブランドなどの名称は、その所有者
+である各社の商標または登録商標です。本製品および本書は、
+不許複製・禁無断転載を原則とするDJIの著作物のため、DJI
+から書面による事前承認または許諾を得ることなく何らかの
+形で本製品または文書のいかなる部分も複製することは固く
+禁じられています。
+本免責事項の最終解釈権限はDJIが有します。
+警告
+1. ご使用前に、RoboMaster公式ウェブサイトにアクセスし
+て『RoboMaster 開発ボード ユーザーマニュアル』をダウ
+ンロードしてください。ボード タイプ Aを使用する際は、
+マニュアル全体を読んで内容を理解し、マニュアル記載の
+指示を厳守してください。
+2. 『RoboMaster 開発ボード ユーザーマニュアル』記載の指
+示に従ってケーブルを正しく接続してください。そうしな
+いとコネクターやボード タイプ Aが深刻な損傷を受ける
+おそれがあります。
+3. 短絡がなく、すべてのケーブルが良好な状態であることを
+確認してください。損傷したケーブルは決して使用しない
+でください。
+4. 本製品は、本書記載の各仕様（電圧、電流、温度など）を
+厳守してご使用ください。そうしないと製品寿命が短くな
+り、また製品に修復不能な損傷が発生するおそれもありま
+す。
+14
+JP
+5. ボード タイプ Aを、静電気や物理的損傷から保護する対
+策を取ってください。
+6. 常にボード タイプ Aを清潔に保ってください。そうしな
+いと短絡が発生したり、ボード タイプ Aの性能が低下し
+たりすることがあります。
+7. ボード タイプ Aのチップに手を触れないでください。静
+電気が発生してボード タイプ Aが損傷したり、性能が低
+下したりするおそれがあります。
+8. 火炎、煙、異臭などの異常を検知した場合は、速やかにボ
+ード タイプ Aを電源から取り外してください。
+はじめに
+RoboMaster 開発ボード タイプ Aは、広範囲のロボット関
+連プロジェクトで使用するように設計された柔軟性の高いコ
+ントローラーボードです。メインコントローラーチップには
+STM32F427IIH6が使用され、複数の拡張ポートと通信ポート
+を装備しています。本製品は、RoboMaster M3508／M2006
+ブラシレスDCギアモーター、RoboMaster UWB位置決めシ
+ステム、DJIオンボードSDK、DJIマニホールドの高性能組
+み込みコンピューターに対応しています。
+同梱物
+ボード タイプ A x 1 電源ケーブル x 1
+SWDケーブル x 1 2ピンCANケーブル x 1
+15
+JP
+概要
+1 2 1 345 6 6 6
+2
+23 7
+23 8
+1 9 10
+26
+25 11
+24
+1 1 1 2 3
+14
+8
+2 15
+231 223 122212019161817 16 16
+1. CAN1ポート 14. SWDポート
+2. 制御可能電源 15. 3.3V出力ポート
+出力ポート 16. UARTポート
+3. TFカードスロット 17. リセットボタン
+4. 電圧調整用DIPスイッチ 18. カスタマイズ可能LED × 2
+5. SDK CAN2ポート 19. SDK UARTポート
+6. CAN2ポート 20. 5V電源出力ポート
+7. 信号同期ポート 21. 12V電源インジケーター
+8. PWMポート × 8 22. BTUARTポート
+9. USBポート 23. PWMポート
+10. カスタマイズ可能LED × 8 24. 電源入力ポート
+11. OLEDポート 25. 12V電源出力ポート × 3
+12. D-Busポート 26. GPIOピン × 18 & 5V電源
+13. カスタマイズ可能ボタン
+1166
+JP
+下図は、ボード タイプ Aの電源ブロック図です。
+PowerTree
+24 V Power output @ Max 20 A Power output
+LM2511612 V@10 A XT30 Power supply
+MP2233 3.3 V@3 A 3.e3x tVe rPnoawl eeqr usiuppmpelyn tto
+TPS545405~12 V @ 5 A Variable power supply output PWM power supply × 16 TPS545405 V @ 2 A Communication port power supply CSeArNia lc coommmmuunnicicaatitoionn p poortrt MP2456GJ5 V@500 mA LP5907MFX 3.3 V@250 mA MCU
+LP5907MFX 3.3 V@250 mA IMU
+D-Bus + Buzzer
+17
+tupni
+rewoP V 42
+dna
+rotrcoetctoertpo
+rypt ipraul-otrpa etssreveR
+ボード タイプ Aの取り付け
+ボード タイプ Aの取り付けの際は、下図の寸法を参照してく
+ださい。
+64
+単位：mm
+85 23
+85
+4x 3.50
+JP
+使用方法
+ボード タイプ Aは、カスタマイズ性に優れています。本製品
+は、多種多様なデバイスに接続でき、それぞれのプロジェク
+トに合わせて調整できます。ボード タイプ AはDFUモード
+によるファームウェア更新に対応しています。
+詳細については、QRコードをスキャンするか、
+https://www.robomaster.com/en-US/products/components/
+general/development-board#downloads にアクセスして、
+『RoboMaster 開発ボード・ユーザー・マニュアル』をダウン
+ロードしてご確認ください。
+仕様
+最大電圧 26 V
+対応バッテリータイプ 4S〜6S LiPo
+最大動作電流*（連続） 20A
+重量 48g
+寸法（長さ×幅） 85 × 58mm
+動作環境温度 0〜55℃
+* 最大動作電流はラボ環境でテストしました。この値は参考
+値です。
+18
+JP
+ボード タイプ Aのピン配置図
+19
+WWW.ROBOMASTER.COM
+and are trademarks of DJI.
+Copyright © 2018 DJI All Rights Reserved.
+和 是大疆创新的商标。
+Copyright © 2018 大疆创新 版权所有
+Printed in China.
+中国印制 YC.BZ.SS000450.02

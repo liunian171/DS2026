@@ -1,0 +1,1889 @@
+--- Page 1 ---
+RoboMaster 开发板
+用户手册
+V1.0
+2018.04
+
+--- Page 3 ---
+目 录
+免责声明 2
+产品使用注意事项 2
+RoboMaster开发板A型 3
+简 介 3
+接口及外部丝印 3
+特征参数 5
+功能说明 6
+RoboMaster开发板B型 18
+简 介 18
+接口及外部丝印 18
+特征参数 20
+功能说明 20
+RoboMaster开发板OLED 27
+简 介 27
+特征参数 27
+功能说明 28
+参考初始化代码 29
+RoboMaster开发板A型 丝印及引脚定义图 30
+RoboMaster开发板B型 丝印及引脚定义图 31
+1
+
+--- Page 4 ---
+免责声明
+感谢您购买RoboMasterTM 开发板A型（以下简称开发板A型）、RoboMaster 开发板B型（以
+下简称开发板B型）、RoboMaster 开发板OLED（以下简称OLED）。在使用之前，请仔细
+阅读本声明，一旦使用，即被视为对本声明全部内容的认可和接受。请严格遵守手册、产品说
+明和相关的法律法规、政策、准则安装和使用该产品。在使用产品过程中，用户承诺对自己的
+行为及因此而产生的所有后果负责。因用户不当使用、安装、改装造成的任何损失，DJITM将
+不承担法律责任。
+DJI是深圳市大疆TM创新科技有限公司及其关联公司的商标。本文出现的产品名称、品牌等，
+均为其所属公司的商标。本产品及手册为大疆创新版权所有。未经许可，不得以任何形式复制
+翻印。
+关于免责声明的最终解释权，归大疆创新所有。
+产品使用注意事项
+1. 请按照说明书正确连接线材，以免损坏接口以及开发板。
+2. 使用前请检查线材有无老化、短路。老化或短路的线材不适合继续使用。
+3. 请按照本文规定的工作环境（如电压、电流、温度等参数）使用，否则将会影响产品寿命
+或造成永久性损坏。
+4. 安装时注意做好保护，防止静电、物理损坏。
+5. 请保持开发板的干净整洁，避免由于异物造成短路或性能下降。
+6. 请不要用手直接接触开发板上的芯片，避免由于静电放电造成开发板损坏或性能下降。
+7. 开发板上电后如发现有火花、冒烟，焦糊味或其它异常，请立即关掉电源。
+2
+
+--- Page 5 ---
+RoboMaster 开发板 A 型
+简 介
+RoboMaster 开发板 A 型是一款面向机器人 DIY 的开源主控。开发板主控芯片为
+STM32F427IIH6，拥有丰富的扩展接口和通信接口，板载 IMU，可配合 RoboMaster 出品的
+M3508 直流无刷减速电机、UWB 模块以及妙算等产品使用，亦可配合 DJI 飞控 SDK 使用，
+配件丰富。开发板具有防反接和缓启动等多重保护。经过 RoboMaster 竞赛的打磨和改进，开
+发板不仅满足比赛机器人的控制需求，也非常适合用户 DIY。
+接口及外部丝印
+开发板A型正面丝印及接口如下图所示：
+1 2 1 3 4 5 6 6 6
+2
+23 7
+23 8
+1 9
+10
+26
+11
+25
+24
+12
+1
+13
+14
+8
+2
+15
+231 223 122212019161817 16 16
+序号 名称 丝印说明 备注
+H：CAN-H(高位数据线)
+1 CAN1
+L：CAN-L(低位数据线)
+未标注的一端为电源负极,此
+2 可控电源输出接口 +：电源正极
+电源可以通过程序进行控制。
+3 TF卡槽
+此拨码用于调节(8)PWM的
+6.4V 7.4V 8.4V：
+4 电压调节拨码 电压，更多详细设置请见反
+仅有对应位置ON时的电压值
+面丝印图。
+5 SDK CAN2
+3
+
+--- Page 6 ---
+H：CAN-H(高位数据线)
+6 CAN2
+L：CAN-L(低位数据线)
+7 同步信号 G：GND、S：同步信号
+G：GND 、+：VCC 其中VCC电压可以通过电压
+8 PWM×8 ：PWM输出，A – H S-Z：IO 调节拨码设置，IO对应表见
+对应表索引 反面丝印图。
+9 USB
+10 用户自定义LED×8
+11 OLED接口
+在连接设备时，请注意DBUS
+DBUS：DBUS信号、+：VCC
+12 DBUS 端子上的突出部分方向与丝
+G：GND
+印标注一致。
+13 用户自定义按键
++：VCC(3.3V)、G：GND、
+14 SWD SWCLK：SWD时钟、SIDIO：
+SWD数据
+15 3.3V电源输出接口 3V3：VCC(3.3V)、PGND：GND
++：VCC、G：GND、T：数据发送
+16 UART
+(Tx)、R：数据接收(Rx)
+17 复位按键
+18 用户自定义LED×2
+G：GND、T：数据发送(Tx)
+19 SDK UART
+R：数据接收(Rx)、*：无连接
+20 5V电源输出接口 +：VCC 未标注引脚为GND。
+21 12V电源指示灯
+T：数据发送(Tx)、R：数据接收(Rx)、
+22 蓝牙串口
+G：GND、+：VCC
+G：GND 、*：无连接 部分接口未完全标注，只标
+23 PWM
+：PWM输出、△：1号引脚 注了1号引脚。
+24 电源输入接口 +：VCC 未标注引脚为GND。
+25 12V电源输出接口×3
+26 GPIO X 18 & 5V电源 1，2，I-R：IO对应表索引 IO对应表见反面丝印图。
+4
+
+--- Page 7 ---
+电源框图如下图所示：
+PowerTree
+24 V Power output @ Max 20 A 电源输出
+LM25116 12 V@10 A XT30 供电
+MP2233 3.3 V@3 A 3.3 V 对外供电
+TPS54540 5~12 V@5 A可调电源输出 2*8 路PWM供电
+5 V@2 A 5 V CAN通讯接口
+TPS54540 串口通讯接口
+MP2456GJ5 V@500 mA LP5907MFX 3.3 V@250 mA MCU
+LP5907MFX 3.3 V@250 mA IMU
+D-Bus + Buzzer
+5
+入输源电V
+42
+动启缓
+&接反防
+开发板A型背面丝印如下图所示：
+85
+通讯接口电源
+特征参数
+项目 参数
+最大电压 26 V
+支持电池 4~6S LiPo
+最大允许输入电流 *（持续） 20 A
+电源输出接口最大单路电流** 10A
+重量 48 g
+尺寸（长宽） 85×58 mm
+工作温度范围 0 ~ 55 ℃
+* 室温25℃、通风良好的实验环境下测得。
+** 电源输出接口单路最大电流指每一路电源输出接口可承受的最大电流，但所有电源输出接
+口的电流总和不得超过最大允许输入电流。
+85
+64
+23
+对应单片机IO 对应输出电压
+正面丝印标注索引
+电压调节拨码状态
+对应单片机IO
+正面丝印标注索引
+5.50 3.50
+
+--- Page 8 ---
+1.2 DBUS*接口
+开发板A型配备有1路DBUS接口,下图是其接口原理图。
+DBUS是UART信号的反相形式，因此从接插件的3脚进入后，经过Q14反相之后再送入单
+片机的UART1。波特率一般设置为100kbps。
+* DBUS为DJI遥控器通用协议
+6
+右左V82压电出输大最
+CAN1_L [6,8] CAN1_H [6,8]
+PGND 电流20A VCC_INPUT
+PGND
+Q18
+NC
+PGND BAT-
+NC D14 开启过压防护
+BAT-
+PGND
+6093TBMP 1
+2
+3
+0.0
+J10
+M-WP03TX 1
+2
+3
+4 D17
+1V9C485XZB
+D13
+R87 1K
+0201 1%
+0201R171
+1% 10K
+AC82JAMS
+R33
+2040
+28R
+%5
+TPCA8122 Q1 3
+2
+1
+4
+5
+6
+7
+8 1020
+%1
+961R
+K001
+D94
+28V~32V
+2040
+%5
+29R
+R33
+C
+A
+271R
+1020
+K1
+%1
+1V9C485XZB
+41D
+R173
+0201 1.5M 1%
+2040
+V52
+491C
+Fn01
+1020
+%1
+071R
+K001
+2040
+V52
+991C
+Fn01
+J9
+4
+3 4 1 2 1 2
+3 11257W90-2P-S
+1.0A
+3060
+V05
+14C
+Fn001
+Q2
+1
+2
+3
+PSMN1R4-40YLD
+4
+电源和CAN输入
+5
+防反接，上电缓启动，过压保护
+DBUS
+VCC_3V3_S
+[3] USART1_RX(PB7)
+Q14
+1
+VCC_5V_S
+PMBT3904-215
+PGND
+PGND
+3
+2
+功能说明
+1.1 电源过压、防反接、缓启动电路
+电源输入接口采用标准的XT30接口，电源输入首先并联28V TVS管，防止瞬态高电压烧坏开
+发板，然后通过PMOS Q1 和NMOS Q2组成缓启动与防反接电路，有效防止电源接头接触瞬
+间打火，造成接头损坏，并且防止电源正负极反接对开发板造成损害。其中图中D19为齐纳
+二极管，当输入电压超过其击穿电压（30±2V）时，三极管Q3导通，PMOS Q1关断，该电
+路起到过压保护的作用。
+R89
+4.7K
+2.54mm 3PIN单排弯头插针（90°）
+R174 0.0A
+3
+4.7K 1 2 2 3 1
+J43
+
+--- Page 9 ---
+1.4 USART接口
+开发板A型配备有四路USART接口，分别连接到USART3、USART6、USART7和 USART8。其中USART3是配合DJI ON BOARD SDK使用，线序与其它三个串口不同，在使 用串口时请注意TX和RX需要交叉连接。本接口只支持3.3V和5V电平，若需与RS485或 RS232接口通信，请外置电平转换芯片。
+J2 通讯接口
+5 6 5 6 1 2 3 4 1 2 3 4 U U S S A A R R T T 3 3 _ _ R TX X ( ( P P D D 8 9 ) ) [ [ 4 4 ] ] 1.0A 11257W00-4P-S PGND 立式
+7
+83C Fp74V051020 0201 0201L3 150mA L4 150mA D12 73C Fp74V051020 C
+A
+D11 C
+A
+J36 5 6 5 6 1 2 3 4 1 2 3 4 VC P C G _ N 5V D _U U U S S A A R R T T 6 6 _ _ T R X X ( ( P P G G 1 9 4 ) ) [ [ 4 4 ] ]
+1.0A 立式 PGND 11257W00-4P-S C67D
+A
+C77D
+A
+0201 0201L62 150mA L63 150mA
+401C
+Fp74V051020
+501C
+Fp74V051020
+J37 0201 5 6 5 6 1 2 3 4 1 2 3 4 V L C 6 P C 4 G _ N 5V D _U 150mA U U A A R R T T 8 8 _ _ R TX X ( ( P P E E 1 0 ) ) [ [ 4 4 ] ] 1.0A 立式 11257W00-4P-S
+PGND
+801C
+Fp74V051020
+0201 L65 150mA C97D
+A
+C08D
+A
+901C
+Fp74V051020
+UART7_RX(PE7) [4] UART7_TX(PE8) [4] PGND VCC_5V_U
+立式 PGND C38D
+A
+J38 0201
+5 6 5 6 1 2 3 4 1 2 3 4 L67 150mA
+1.0A 11257W00-4P-S 321C
+Fp74V051020
+0201 L68 150mA
+C28D
+A
+421C
+Fp74V051020
+J2 通讯接口
+5 6 5 6 1 2 3 4 1 2 3 4 U U S S A A R R T T 3 3 _ _ T R X X ( ( P P D D 8 9 ) ) [ [ 4 4 ] ] 1.0A 11257W00-4P-S PGND 立式
+On Board SDK
+USER串口
+83C Fp74V051020 0201 0201L3 150mA L4 150mA D12 73C Fp74V051020 C A D11 C A
+J36
+5 6 5 6 1 2 3 4 1 2 3 4 VC P C G _ N 5V D _U U U S S A A R R T T 6 6 _ _ T R X X ( ( P P G G 1 9 4 ) ) [ [ 4 4 ] ] 1.0A 立式 PGND 11257W00-4P-S C67D
+A
+C77D
+A
+0201
+0201L62 150mA L63 150mA 401C
+Fp74V051020
+501C
+Fp74V051020
+J37 0201
+5 6 5 6 1 2 3 4 1 2 3 4 V L C 6 P C 4 G _ N 5V D _U 150mA U U A A R R T T 8 8 _ _ R TX X ( ( P P E E 1 0 ) ) [ [ 4 4 ] ] 1.0A 立式 11257W00-4P-S PGND 801C
+Fp74V051020
+0201 L65 150mA C97D
+A
+C08D
+A
+901C
+Fp74V051020
+UART7_RX(PE7) [4] UART7_TX(PE8) [4] PGND VCC_5V_U 立式 PGND C38D A
+J38 0201
+5 6 5 6 1 2 3 4 1 2 3 4 L67 150mA 1.0A 11257W00-4P-S 321C Fp74V051020 0201 L68 150mA C28D A 421C Fp74V051020
+On Board SDK
+J2 通讯接口 5 6 5 6 1 2 3 4 1 2 3 4 U U S S A A R R T T 3 3 _ _ R TX X ( ( P P D D 8 9 ) ) [ [ 4 4 ] ] 1.0A 11257W00-4P-S PGND 立式
+USER串口
+83C Fp74V051020 0201 0201L3 150mA L4 150mA D12 73C Fp74V051020 C A D11 C A
+J36 5 6 5 6 1 2 3 4 1 2 3 4 VC P C G _ N 5V D _U U U S S A A R R T T 6 6 _ _ T R X X ( ( P P G G 1 9 4 ) ) [ [ 4 4 ] ]
+1.0A 立式 PGND 11257W00-4P-S C67D
+A
+C77D
+A
+0201 0201L62 150mA L63 150mA
+401C
+Fp74V051020
+501C
+Fp74V051020
+J37 0201 5 6 5 6 1 2 3 4 1 2 3 4 V L C 6 P C 4 G _ N 5V D _U 150mA U U A A R R T T 8 8 _ _ R TX X ( ( P P E E 1 0 ) ) [ [ 4 4 ] ]
+1.0A 立式 11257W00-4P-S PGND 801C
+Fp74V051020
+0201 L65 150mA
+C97D
+A
+C08D
+A
+901C
+Fp74V051020
+UART7_RX(PE7) [4] UART7_TX(PE8) [4] PGND VCC_5V_U 立式 PGND C38D
+A
+J38 0201 5 6 5 6 1 2 3 4 1 2 3 4 L67 150mA 1.0A 11257W00-4P-S 321C
+Fp74V051020
+0201 L68 150mA C28D
+A
+421C
+Fp74V051020
+J2 通讯接口
+5 6 5 6 1 2 3 4 1 2 3 4 U U S S A A R R T T 3 3 _ _ T R X X ( ( P P D D 8 9 ) ) [ [ 4 4 ] ] 1.0A
+11257W00-4P-S
+PGND
+立式
+On Board SDK
+USER串口
+83C
+Fp74V051020
+0201 0201L3 150mA L4 150mA D12 73C
+Fp74V051020
+C
+A
+D11 C
+A
+J36 5 6 5 6 1 2 3 4 1 2 3 4 VC P C G _ N 5V D _U U U S S A A R R T T 6 6 _ _ T R X X ( ( P P G G 1 9 4 ) ) [ [ 4 4 ] ]
+1.0A 立式
+PGND 11257W00-4P-S
+C67D
+A
+C77D
+A
+0201 0201L62 150mA L63 150mA
+401C
+Fp74V051020
+501C
+Fp74V051020
+J37 0201 5 6 5 6 1 2 3 4 1 2 3 4 V L C 6 P C 4 G _ N 5V D _U 150mA U U A A R R T T 8 8 _ _ R TX X ( ( P P E E 1 0 ) ) [ [ 4 4 ] ]
+1.0A 立式 11257W00-4P-S PGND 801C
+Fp74V051020
+0201 L65 150mA
+C97D
+A
+C08D
+A
+901C
+Fp74V051020
+UART7_RX(PE7) [4] UART7_TX(PE8) [4] PGND VCC_5V_U
+立式 PGND C38D
+A
+J38 0201 5 6 5 6 1 2 3 4 1 2 3 4 L67 150mA
+1.0A 11257W00-4P-S 321C
+Fp74V051020
+0201 L68 150mA
+C28D
+A
+421C
+Fp74V051020
+1.3 SWD调试接口
+开发板A型配备一个SWD调试接口，用于单片机程序的下载和调试。SWD调试接口位于主
+控板的右侧下方。SWCLK和SWDIO在开发板中串联了100Ω的电阻，起到保护单片机的作用。
+J1
+1 1% R3 100R 0201
+SWDIO [3]
+5 2 1% R4 100R 0201
+SWCLK [3]
+6 3 0402 On Board SDK
+4 L1 GND
+VCC_3V3_S 1500mA GND RFID 卧式53261 接口，1脚在左侧
+1A
+USER串口
+
+--- Page 10 ---
+1.5 用户自定义LED×2
+开发板A型配备有2颗用户自定义LED，分别为绿色和红色。每一个指示灯都由单片机的一
+个引脚直接驱动，其配置低电平则点亮指示灯，配置高电平则指示灯熄灭。下表为指示灯的引
+脚配置和参数。
+用户自定义LED
+颜色 单片机引脚 点亮电流
+绿色 PF14 约4mA
+红色 PE11 约4mA
+1.6 用户自定义LED X 8
+开发板A型配备有8颗绿色LED灯珠，对应IO为PG1-PG8，单颗点亮电流约4mA。
+1.7 按键
+开发板A型配备两个按键，其中黑色按键为单片机复位按键，白色按键为用户自定义按键。
+其中白色按键直接连到单片机的PB2管脚，该按键按下为高电平。
+VCC_3V3_S
+SW1
+NRST
+4 3
+2 1
+50mA
+1.8 BOOT启动设置
+开发板A型上的STM32芯片上有两个管脚BOOT0和BOOT1，这两个管脚在芯片复位时的
+电平状态决定了芯片复位后的启动方式。开发板A型的BOOT管脚配置如下图。默认情况下
+BOOT管脚均被拉低，上电从User Flash启动。其中R1、R2、R17和R18焊盘位于两个按
+键中间，R1和R17是空贴，用户可以使用镊子将其短接，使得单片机以不同的方式启动。当
+BOOT0 = 1 BOOT1 = 0时，单片机将从System memory 启动，进入DFU模式。
+8
+91R
+1020
+K01
+%1
+VCC_3V3_S
+S1 KEY(PB2) [4]
+0201
+C13
+6.3V 1uF
+50mA
+3
+4
+1
+2
+用户自定义按键
+VCC_3V3_MCU R1 5% NC VCC_3V3_MCU R17 5% NC
+10K 0402 BOOT1 10K 0402
+R2 5% R18 5% BOOT0
+10K 0402 10K 0402
+
+--- Page 11 ---
+1.9 USB接口
+开发板A型配备一个USB全速接口，该端口完全符合USB2.0规范的On-The-Go补充标准，
+在主机模式下。OTG_FS支持全速（FS，12Mbps）和低速（LS，1.5Mbps）收发器，而从机
+模式下仅支持全速（FS，12Mbps）收发器。
+VCC_5V_S
+USB_FS_DM(PA11)[3]
+USB_FS_DP(PA12) [3]
+USB_FS_ID(PA10) [3]
+9
+2040
+V61
+04C
+Fu1
+D15 LB1VV21DSEP
+C
+A
+LB1F0V5DSEP C
+A
+81D
+L5
+0603 INDUCTOR
+1.4A
+1.0A
+R38
+1 0402 22R
+VB D U M S 3 2 1 1 5% 2 2
+DP 4 DLP11SN900HL2
+ID 5 U2
+GND 4 4 3 3 6
+SHELL1 7
+SHELL2 8
+SHELL3 9 SHELL4 10
+SHELL5 11 SHELL6
+J14
+LB1F0V5DSEP C
+A
+91D
+2040
+V52
+93C
+Fn001
+5% R41
+0402 22R
+LB1F0V5DSEP C
+A
+02D
+3V3 3V3
+NRST NRST KEY(PB2) KEY(PB2)
+BOOT0 BOOT1
+BOOT0 BOOT1
+GND GND VCC_3V3_S VCC_3V3_S
+GND GND
+Boot mood selection pins
+Boot mode Aliasing
+BOOT1 BOOT0
+X 0 Main Flash Memory Main Flash memory is selected as
+the boot space
+0 1 System memory System memory is selected as the
+boot space
+1 1 Embedded SRAM Embedded SRAM is selected as
+the boot space
+USB接口
+5% R42 0402 22R
+
+--- Page 12 ---
+1.10 蜂鸣器
+开发板A型板载一个贴片式蜂鸣器，该蜂鸣器需要使用PWM驱动，额定频率2700Hz。
+Buzzer
+VCC_5V_S
+0603C50 25V10uF
+LS1
+[4]TIM12_CH1(PH6)
+PGND
+1.11 5V电源接口
+开发板A型集成一个可控的5V电源接口，最大电流400mA，用户可以外接RoboMaster红
+点激光器，也可使用线材包里提供的线材连接其他设备。
+10
+7205-A0358-JLK 5V
+C
+A
+B D
+1 Q4
+NPN-1
+R48 1A
+10K
+3
+2
+D28
+R47 510R
+0402 5%
+EDOID
+C
+A
+VCC_5V_U
+PGND
+[4] LASER(PG13) 1 Q3
+NPN-1
+R44
+10K 1A
+PGND
+3
+2
+5V电源接口
+J15
+3
+5% R37 1 3 0805 0R 2 1
+2 4
+4
+1A
+53398-0271
+R43
+510R
+0402
+5%
+
+--- Page 13 ---
+1.12 CAN2通讯接口
+开发板A型为满足用户外接设备的需求，一共引出4个CAN2接口，其中一个（J3）线序与
+另外三个（J11、J8和J4）不相同。J3是专门为DJI OnboardSDK使用的通讯接口，其余三
+个接口可以接RoboMaster UWB定位系统以及其他CAN通讯的模块。
+CAN 接口 CAN2 接口
+CAN 接口 CAN2 接口
+J4 VCC_5V_U J8 VCC_5V_U
+PGND 5 6 5 6 1 1 1 J 1 4 5 6 5 6 . 1. 1 0 02 2 A A5 5 7 7 W W 1 2 3 4 1 2 3 4 立 立 0 0 0 0 式 式 - - 4 4 1 2 3 4 1 2 3 4 P P - - S S VCC_5V_U C C C C A A A A P PN N N N G G2 2 2 2 N N_ _ _ _ H L H L D D [ [ [ [ 6 6 6 6 , , , , 8 8 8 8 ] ] ] ] PGND 5 6 5 6 1 1 J 1 1 8 5 6 5 6 . 1. 1 0 02 2 A A5 5 立 立 7 7 W W 1 2 3 4 1 2 3 4 式 式 0 0 0 0 - - 4 4 1 2 3 4 1 2 3 4 P P - - S S VCC_5V_U C C C C P P A A A A G G N N N N N N 2 2 2 2 D D _ _ _ _ L H H L [ [ [ [ 6 6 6 6 , , , , 8 8 8 8 ] ] ] ]
+PGND PGND
+CAN2 接口
+CAN2 接口
+J11 VCC_5V_U J3
+5 6 5 6 J 1 1 5 6 5 6 .0 1 A立1 2 3 4 1 2 3 4 式 1 2 3 4 1 2 3 4 VCC_5V_U C C C C P P A A A A G G N N N N N N 2 2 2 2 D D _ _ _ _ H L H L [ [ [ [ 6 6 6 6 , , , , 8 8 8 8 ] ] ] ] 5 6 5 6 J 1 5 6 5 6 3 .0A 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 C C C C A A A A N N N N 2 2 2 2 _ _ _ _ L H H L [ [ [ [ 6 6 6 6 , , , , 8 8 8 8 ] ] ] ]
+11.102A5立7W式00-4P-S 11.102A57W00-4P-S
+PGND 11257W00-4P-S PGND 11 立 25 式 7W00-4P-S PGND
+PGND PGND 立式 PGND
+1.13 IMU模块
+开发板A型集成一个IMU模块，其IMU由MPU6500陀螺仪和IST8310地磁传感器组成。为
+了解决陀螺仪温飘的问题，开发板在MPU6500四周增加10颗加热电阻，用户可以通过PB5
+加热电阻控制管脚和MPU6500内部的温度传感器做恒温处理，加热温度一般控制在比电路板
+正常工作温度高15~20℃为宜。10个加热电阻工作电压为24V，该电阻可以在1S内将IMU
+模块的温度从25℃加热到50℃。板载IST8310的地址为：0x0E。为减少电源噪声对IMU模
+块的影响，板载IMU模块采用独立的LDO供电。
+VCC_5V_S U14 VCC_3V3_IMU
+4 1 1
+0402C195 IN OUT 0402 C197 C196
+3 2
+6.3V4.7uF R168 EN GND 6.3V4.7uF 100nF
+4.7K PAD 5 25V0402
+0402 LP5907SNX-3.3/NOPB
+5%
+11
+
+--- Page 14 ---
+VCC_3V3_IMU
+U3
+C51 C52 0402C53 13 VDD C54
+泄放电阻 0 1 2 0 0 V 1 10nF 0402 100nF16V1uF 8 VDDIO REGOUT 10 25V 100nF
+25V 0402
+[4] SPI5_MOSI(PF9) 24 SDA/SDI AD0/SDO 9 0201 SPI5_MISO(PF8) [4]
+[4] SPI5_SCK(PF7) 23 SCL/SCLK CSn 22 L16 150mA SPI5_NSS(PF6) [4]
+[3] IMU_INT(PB8) A A U U X X _ _ D CL A 1 1 2 1 7 1 2 1 9 A F I R A N S E U U T Y S X X N V _ _ - C C D F L L A OAT N N N N N N N N N N C C C C C C C C C C 1 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 1 1 1 1 4 5 6 7
+AUX_CL 2 2 5 0 R eP ES A V D -GND GND 18 VCC_3V3_IMU AUX_DA MPU6600
+12
+64R K7.4
+0201 0201
+L13 150mA L14 150mA 0201
+L15 150mA
+0201 L17 150mA R49
+0201 4.7K 5% R50
+0201 4.7K
+5%
+VCC_3V3_IMU
+[4] Set/Reset(PE2)
+[4] INT(PE3) AUX_DA
+U4
+VCC_3V3_IMU AUX_CL 1 2 3 S A C V L DD C56
+4 NC1
+NC2
+C57 4.7uF
+100nF 10V
+25V 0603
+0402 IST8310
+IIC Address :0X0E
+5
+0DAC
+6
+1DAC
+7
+PPV
+8
+3CN
+12 NC 11 GND2 10
+C1 9
+GND1
+61 51
+ADS
+41
+YDRD
+31
+NTSR DDVD
+C55
+100nF
+0402 25V
+VCC_INPUT
+[3] Heat_PWM(PB5)
+PGND
+2040
+%5
+25R
+K01
+2040
+%5
+55R
+K01
+2040
+%5
+95R
+K01
+0201
+1% R61 100R
+2040
+%5
+15R
+K01
+2040
+%5
+45R
+K01
+2040
+%5
+75R
+K01
+2040
+%5
+85R
+K01
+Q5
+1 BSS138LT1G
+0.5~1.5V
+2040
+%5
+35R
+K01
+3
+2
+2040
+%5
+65R
+K01
+2040
+%5
+06R
+K01
+R62
+XXX
+10K
+0402
+5%
+
+--- Page 15 ---
+1.15 用户自定义接口
+为增强开发板A型的适用性，板载18个用户自定义接口，以2.54mm排针的形式引出，其原
+理图如下图所示。
+[[ [ [[ [ [ [[ 53 4 33 4 4 33 ]] ] ]] ] ] ]] I S D S AA AA D 2 PP DD DDAA C II C CC CC C 442 __ _ 11 11 _ _ SN __ __OE S C X II II DS U NN NN K T SA T 98 11 I ((( 91 PP (( 01 P PP (( E (( E P F P PP BB140 IA CC 10 9 2)) 4 )) 01 ) ) ) )) D AA I AA SS P 2PP F DD DD A C 1 II C CC CC 44 2 0 __ _ 11 11 _MM __ __ O S II II C U NN NN IOSL T 11 11SO( 2 P 45 32I(( ( F (( (( PP P PP PP 1EE A CC CC )56 5 45 32 )) ) )) )) [ [[ [[ [ [[[ 4 33 33 3 444 ] ]] ]] ] ]]]
+VCC_5V_U PGND
+13
+59C
+Fp74V051020
+0201150mA
+58C
+Fp74V051020
+C76D
+A
+150mA
+19C
+Fp74V051020
+0201150mA
+C56D
+A
+69C
+Fp74V051020
+150mA
+C85D
+A
+09C
+Fp74V051020
+C86D
+A
+150mA 0201150mA
+98C
+Fp74V051020
+C36D
+A
+C46D
+A
+C96D
+A
+C07D 79C
+Fp74V0A51020
+89C
+Fp74V051020
+0201150mA
+88C
+Fp74V051020
+0201
+39C
+Fp74V051020
+150mA
+C26D
+A
+99C
+Fp74V051020
+0201150mA
+78C
+Fp74V051020
+C17D
+A
+115500mmAA
+68C
+Fp74V051020
+C16D
+A
+C66D
+A
+C27D
+A
+001CFp74V051020 201CFp74V051020
+150mA
+C06D
+A
+101CFp74V051020
+11111 1357913579 J34 2468111112 024680
+3A 2*10pin 180°直排针 C37D
+A
+00 00 000 0 0 22 22 222 2 2 00 00 000 0 0 11 11 111 1 1 LL LL LLL L L 55 55 444 5 6 68 02 468 4 0 1 1 5 5 0 0 m m A A
+C95D
+A
+49C
+Fp74V051020
+C57D
+A
+0201
+29C
+Fp74V051020
+C47D
+A
+1.14 TF卡接口
+开发板A型配备一个TF卡接口，用户可以根据自己的需求存储一些调试数据，其原理图如下
+图所示。
+VCC_3V3_S
+Micro_SD
+PGND
+[3] SDIO_D2(PC10) [3] SDIO_D3(PC11) [4] SDIO_CMD(PD2) R29 22R0.050402
+[3] SDIO_CK(PC12)
+[3] SDIO_D0(PC8) [3] SDIO_D1(PC9)
+[4] SD_EXTI(PE15)
+PGND
+PGND
+用户自定义接口
+0022001111 1 1 55 5 5 00 0 0 mm m m AA A A LL L LL LL LL 55 4 65 55 44 57 9 19 13 57
+22R
+K01
+R30 22R0.050402
+32R
+K01
+R28 22R0.050402
+R31 22R0.050402
+42R
+K01
+R32 22R0.050402
+52R
+K01
+J6
+1 2 DAT2 3 DAT3 4 CMD
+5 VDD 6 CLK
+7 VSS1 8 DAT0 D1 DAT1
+CDSW
+MicroSD 47352-1001
+62R
+K01
+3G
+1G
+3DNG
+1DNG
+4G
+4DNG
+2DNG
+2G
+SD卡接口
+C36
+100nF
+25V
+0402
+R27 22R0.050402
+
+--- Page 16 ---
+1.16 PWM接口
+开发板A型为方便用户使用PWM驱动的舵机等执行器，引出16路PWM，并为这16路
+PWM提供5A驱动能力的电源。PWM供电电压默认输出5V，用户可以根据实际需求调整3
+位拨码配置不同的输出电压。PWM原理图和电源配置表如下图所示。
+DC-DC BUCK
+Imax =5A
+(12~24)V->5V
+VCC_INPUT VCC_5V_ADJ
+5V@5A
+NC
+FB_10.8V FB_1 R120 FB=0.8V
+PGND PGND
+fclk = 400kHz PGND
+PGND PGND PGND
+环路补偿 串联电阻 22.75 13.3 9.4
+拨码序号 1 2 3 输出电压
+1 OFF OFF OFF 4.9875 2 ON OFF OFF 6.401126 3 OFF ON OFF 7.405545
+4 OFF OFF ON 8.408777
+5 ON ON ON 12.24
+6 ON ON OFF 8.819 7 OFF ON ON 10.85
+8 ON OFF ON 9.82
+PGND
+14
+1020
+10.0 K86
+TP_3
+0402R119 0.01 17.8K
+C122
+4.7nF 50V
+0402
+V52
+711C
+Fu22
+2040
+%1
+421R
+K3.31
+U7 5A
+2 VIN BOOT 1
+3 EN SW 8
+6 COMP FB 5 4 RT/CLK GND 7
+311C
+Fu7.4 PE 9 50V 0805
+R167
+1.2K 2040 1%
+V52
+481C
+Fu22
+R116
+XXX
+0R04020.05
+TP_4
+V52
+611C
+Fu22 V52
+811C
+Fu22
+2040
+%1
+561R
+R057
+C110
+50V 100nF
+411C
+Fu7.4
+3060
+3
+R118 D81 5 0 0 8 V 05 0201 1 C 0 1 0 2 R 0 8 2 A 1 SVM860VB 02011%100pF
+211C
+Fu7.4
+C115
+100nF 50V 25V 0805 0402 R121
+K342
+2040 10.0
+R117
+XXX
+040240.2K 1%
+111C
+Fu7.4 50V 0805
+U8
+ONKE
+123
+REGST30PHSD
+25mA
+6
+1
+5
+2
+4
+3
+C119
+470pF 50V 0402 V52
+581C
+Fu22
+R115
+K903
+0402
+0.01
+%1
+2040
+321R
+K22
+%1
+2040
+661R
+K2.8
+L66
+6.8uH4.5A
+50VC121
+040247pF
+221R
+2040
+K86.7
+%1
+J31 VCC_5V_ADJ
+[ [ [ [ [ [ [ [ 5 5 5 3 5 3 3 3 ] ] ] ] ] ] ] ] T T T T T T T T I I I I I I I I M M M M M M M M 8 8 8 2 8 2 2 2 _ _ _ _ _ _ _ _ C C C C C C C C H H H H H H H H 4 3 2 1 1 2 3 4 ( ( ( ( ( ( ( ( P P P P P P P P I I I A I A A A 2 7 6 5 0 1 2 3 ) ) ) ) ) ) ) ) 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
+3A 8pin 180°直排针蓝色
+并排放置 PGND
+97C
+Fp74V051020
+0201
+L34 150mA 1%R99 100R 0201
+87C
+Fp74V051020
+C65D
+A
+1%R95 100R 0201 0201 L40 150mA
+C55D
+A
+C75D
+A
+0201 L36 150mA 1%R101 100R 0201
+C74D
+A
+1%R98 100R 0201 0201 L41 150mA
+18C
+Fp74V051020
+28C
+Fp74V051020
+J30
+0201 L37 150mA 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
+3A 8pin 180°直排针 C15D
+A
+1%R103 100R 0201
+08C
+Fp74V051020
+0201 L42 150mA
+C05D
+A
+1%R97 100R 0201
+57C
+Fp74V051020
+J29
+1%R102 100R 0201 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
+3A 8pin 180°直排针红色 C94D
+A
+0201 L38 150mA
+47C
+Fp74V051020
+1%R96 100R 0201
+C84D
+A
+0201 L35 150mA
+67C
+Fp74V051020
+8路PWM 输出
+
+--- Page 17 ---
+1.17 OLED接口
+为方便用户调试和显示部分参数，开发板A型配备OLED接口，用户可以购买OLED模块使用，
+详细使用方法可以参见开发板OLED功能说明。
+VCC_3V3_S PGND OLED_RST(PB10) [3] OLED_DC(PB9) [3] OLED_SCLK(PB3) [3] OLED_MOSI(PA7) [3] BUTTON_AD(PA6)[3]
+PGND
+卧式
+1.18 同步信号接口
+为了同步外接模块时序，开发板A型配备一个5V同步信号接口，该接口可以根据PB14和
+PB15的相关配置，来决定单发同步信号、接收同步信号以及收发同步信号。其电路图如下所示。
+15
+C
+A
+32D 64C
+Fp74V051020
+J17
+8 9 8 9 1 2 3 4 5 6 7 1 2 3 4 5 6 7
+1.0A
+11257W90-7P-S
+74C
+Fp74V051020
+0201 L6 150mA 0201 L9 150mA
+34C
+Fp74V051020
+C
+A
+12D C
+A
+42D C
+A
+52D
+0201 L7 150mA 0201 L10 150mA
+44C
+Fp74V051020
+0201 L8 150mA
+C
+A
+22D 54C
+Fp74V051020
+OLED&按键
+VCC_3V3_S
+VCC_5V_U
+SNYCHOR(PB14) [3]
+PGND PGND
+SNYCHOR(PB15) [3]
+K01
+601R
+%5
+2040
+2040
+50.0
+R22
+501R
+K01
+701R
+601C
+Fp74V05
+1020
+%5
+2040
+Q15
+BSS138LT1G
+R111
+0.5~1.5V
+0R
+0402
+5%
+1
+3 2
+C87D
+A
+5V 同步信号
+J42
+3
+3 2
+2 1
+4 1
+4
+1.0A
+11257W90-2P-S
+
+--- Page 18 ---
+1.19 四路可控电源输出接口
+开发板A型有四个可控电源输出接口，每一个电源接口都由一个PMOS来控制，4路总电流
+不能超过20A，且单路电流不能超过10A。其原理图如下图所示：
+VCC_INPUT
+VCC_OUT1
+VCC_OUT1
+20A走线
+P[O4]WER1_CTRL(PH2) PGND
+PGND
+16
+95C
+Fp74V05
+Q6
+TPCA8122
+3
+2 1
+?2V~?3V
+4
+5
+6 7
+8
+J20 +
+-
+15.0A
+F-BPU03TX
+D30 BZX584C9V1
+A
+0201 R68 C
+L19 150mA
+1 0 K 201 R 10 7 K 0
+1% 0201
+1%
+2040 66RK01 XXX %5
+1 Q9 PMBT3904-215
+2040
+3
+2
+46RK01
+XXX
+1020
+%5
+Q10
+VCC_INPUT TPCA8122
+3
+2 VCC_OUT2 1
+?2V~?3V VCC_OUT2
+20A走线
+[4] POWER2_CTRL(PH3) PGND
+PGND
+4
+5
+6 7
+8
+1 Q13 PMBT3904-215
+3
+2
+0201 R76
+L21 150mA
+1 0 K 201 R 10 7 K 8
+1% 0201
+1%
+2040 47RK01 XXX %5
+D32 BZX584C9V1 2040
+27RK01
+XXX
+%5
+J22 +
+-
+15.0A
+F-BPU03TX A
+C
+06C
+Fp74V051020
+VCC_INPUT
+VCC_OUT3
+J19 VCC_OUT3 +
+- 20A走线
+[4] POWER3_CTRL(PH4) 15.0A PGND
+R69 10K
+0201
+1%
+PGND
+F-BPU03TX
+Q7
+TPCA8122
+3
+2 1
+?2V~?3V A
+C
+4
+5
+6 7
+8
+0201
+L18 150mA
+2040 56RK01 XXX %5
+R67
+1 Q8 PMBT3904-215
+1K 0201
+1%
+3
+2
+D29 BZX584C9V1 2040
+36RK01
+XXX
+85C
+Fp74V051020
+%5
+VCC_INPUT
+VCC_OUT4
+D31 BZX584C9V1
+VCC_OUT4 20A走线
+[4] POWER4_CTRL(PH5) 1 Q PM 12 BT3904-215 PGND
+R77 10K
+0201
+1%
+PGND
+2040
+3
+2
+17RK01
+XXX
+%5
+J21 +
+R75 -
+15.0A
+1K 0201
+1%
+F-BPU03TX A
+C
+16C
+Fp74V051020
+Q11
+TPCA8122
+3
+2 1
+?2V~?3V
+4
+5
+6 7
+8
+0201
+L20 150mA
+2040 37RK01 XXX %5
+
+--- Page 19 ---
+1.20 12V电源输出接口
+开发板A型配备一个输出电压12V，最大输出电流10A*的DC-DC电源,当负载电流达到
+10A后，若继续加重负载，会导致电压下降甚至造成永久损坏。该电源具备过流保护功能，
+保护动作电流为22A，如果用户用来给电机供电，请注意电机如进行急加速急减速等操作时，
+会导致短时的电流增大超过保护电路动作电流值，故请缓慢启动电机，以免造成电机无法正
+常启动。
+(15~24)V->12V
+VCC Vin>12.5f=V2 50K开Hz始转换
+*室温25℃、通风良好的实验环境下测得。
+17
+CCV
+VCC_INPUT
+VCC_INPUT PGND VCC_12V PGND D88 PGND PGND PGNDPGND PGND PGND PGND VCC_12V PGND PGND VCC_12V PGNDPGND
+VCC_12V PGND
+A C RID-IB SVT EDOID R129 4.7R R4.173R4 014%02 R0R139 XX0XR R142 R143
+4.7K
+431CFn01 341CFn3.3 C141 1uF 50V 0805 191CVFu5222 1 23 4 5 U V UR E R N TA I 9 V N /M LSOYPN LM C 25116MHX/NOPB DNGA 6 1 7890 SFCV BS OOMUTP CSCGS 1132 DEMB 11 DNGP 41 HO 19 V S CHW CB 12 180 6 LO 15 VCCX 17 PE 12 CDIODD84E A K80311R 2040 R130 10K C142 04 5 0 % 2 50 1 V 00nF 0603 5% 931CVFu5222 TP_5 331RK8.71 C1u1F305006V03 741C Fp033 731R R0 731CVFu5222 R128 014%02100K %16021 141RRm4 BSCQ01667N06LS3 1.7V
+5 76 8
+4 231R K115 441CFp001 123 C1u1F32 16V 0402 131RK4.21 391CVFu5222 CDIODD87E A TP_6 531R K12.1 041RK7.01 541CFu1 041CVFu5222 D85 DIODE C A 2603410R R%015 C126 C129 4.7uF 100nF 50V 50V 1206 0603 13.8*1L26.69*6.0mm 10uH10A + C125 22uF 35V A C 331C Fp072 53A+ 1CFuC2V253 831CVFu5222 C128 0 5 8 0 0 V 5 1uF C1u1F315006V03 291CVFu5222 Q17 D89
+30mA
+CLY04-8 123R1NMSP 4 5 50V C 4. 1 7 2 u 7 F 012%01R112M7 A DD8IO6DEC 1206 641CFp074 631CVFu5222
+1.21 预留蓝牙模块接口
+为方便用户调试，开发板A型含有一个蓝牙接口，用户可以根据实际的需求自行使用蓝牙模块。
+该接口使用UART2，其原理图如下所示。
+VCC_5V_U
+PGND USART2_RX(PD6) [4] USART2_TX(PD5) [4]
+84C
+Fp74V051020
+94C
+Fp74V051020
+0201 L12 150mA
+C62D
+A
+C72D
+A
+预留蓝牙串口
+J18
+1
+1 2 0201 2 3 L11 150mA 3 4 4
+SIP4-2P54MM
+4Pin排针
+
+--- Page 20 ---
+RoboMaster 开发板 B 型
+简 介
+RoboMaster 开发板 B 型专为传感器和执行部件设计，可配合RoboMaster 开发板 A 型使用，
+完成复杂机器人的开发。该开发板主控芯片为 STM32F105R8T6，接口丰富、结构紧凑，支持
+电磁阀等控制。拥有四路光耦隔离保护接口，可搭配 RoboMaster OLED 模块使用。
+接口及外部丝印
+1 2 3 4 5 6 1
+7 7
+5 5
+8 8
+5 5
+9
+1 14 13 12 1110 1
+11
+15 15
+15 15
+8 8
+18
+
+--- Page 21 ---
+序号 名称 丝印说明 备注
+1 电源输出接口 +：VCC 未标注一端为GND。
+2 复位按键
+3 OLED接口
+4 用户自定义LED X 2
+H：CAN-H(高位数据线)
+5 CAN2 L：CAN-L(低位数据线)
+G：GND、+:VCC
+6 传感器指示灯 S1-S4：对应4个传感器指示灯
++：VCC、G：GND
+7 UART T：数据发送(Tx)
+R：数据接收(Rx)
++：VCC、G：GND、
+8 传感器接口
+：传感器信号
+G：GND、+：VCC
+9 PWM X 4
+：PWM信号
+10 DBUS
+H：CAN-H(高位数据线)
+11 CAN1
+L：CAN-L(低位数据线)
+12 电源输入接口 +：VCC 未标注一端为GND。
++：VCC(3.3V)、G：GND、
+13 SWD SWCLK：SWD时钟、SIDIO：
+SWD数据
+14 GPIO X 4
+15 可控电源输出接口 +：VCC、G：GND
+电源框图如下图所示：
+PowerTree
+24 V PowerOutput MAX@16 A
+电源输出
+5 V@5 A 3.3 V@250 mA
+TPS54540 LP5907MFX MCU
+PWM&5 V POWER SUPPLY
+19
+入输源电V
+42
+接反防
+
+--- Page 22 ---
+特征参数
+项目 参数
+最大电压 26 V
+支持电池 3-6S LiPo
+最大工作电流 *（持续） 20 A
+电源输出接口最大单路电流** 10A
+重量 24 g
+尺寸（长宽） 60*46 mm
+工作温度范围 0 ~ 55 ℃
+* 室温25℃、通风良好的实验环境下测得。
+** 电源输出接口单路最大电流指每一路电源输出接口可承受的最大电流，但所有电源输出接
+口的电流总和不得超过最大允许输入电流。
+功能说明
+2.1 电源防反接电路
+电源输入接口采用标准的XT30接口，在正极线路上串有一个PMOS，该MOS可以实现防反
+接的作用，其原理图如下所示。
+VCC_INPUT
+20
+K01
+%5
+86R
+2040
+Q10
+TPCA8122
+3
+2
+1
+4
+0.0
+5
+6
+J30 7
+8
+M-WP03TX 1
+2
+3
+4
+D20
+0402 R67
+5% 10K
+
+--- Page 23 ---
+2.2 DBUS接口
+开发板B型配备有1路DBUS接口,下图是其接口原理图。
+DBUS是UART信号的反相形式，因此从接插件的3脚进入后，经过Q9反相之后再送入单片
+机的UART4。波特率一般设置为100kbps。
+VCC_3V3
+R45
+4.7K
+VCC_5V
+2.54MM 3PIN 0402
+3 5% DBUS_RX [2]
+3 2
+2 1 R54 1 Q9
+1 0402 4.7K PMBT3904-215
+J9 5%
+2.54mm间距插针
+DBUS
+21
+3
+2
+2.3 SWD调试接口
+开发板B型配备一个SWD调试接口，用于单片机程序的下载和调试。SWD调试接口位于主
+控板的右侧下方。SWCLK和SWDIO在开发板中串联了100Ω的电阻，起到保护单片机的作用。
+J1
+6 1 1% R1 100R 0201
+SWDIO [2]
+2 1% R2 100R 0201
+SWCLK [2]
+3
+GND
+5 4 L1
+VCC_3V3
+1500mA
+立式式53261接口，1脚在左侧
+GND 1A
+533980471
+
+--- Page 24 ---
+2.4 USART接口
+开发板B型配备有两路USART接口，分别连接到USART2、USART3。在使用串口时请注意
+TX和RX的交叉连接，以免造成无法通讯。本接口只支持3.3V和5V电平，若需与RS485或
+两路调试串口
+RS232接口通信，请外置电平转换芯片。
+J16
+6 1 R65 0R
+6 1 VCC_5V
+2 0402NC 5%
+2
+3
+3 USART3_TX [2]
+5 4
+5 4 USART3_RX [2]
+11257W90-4P-S
+11257W90-4P-S
+J20
+6 1 R66 0R
+6 1 VCC_5V
+2 0402NC 5%
+2
+3
+3 USART2_TX [2]
+5 4
+5 4 USART2_RX [2]
+11257W90-4P-S
+11257W90-4P-S 卧式
+2.5 用户自定义LED
+开发板B型配备有2颗LED指示灯。每一个LED 都由单片机的一个引脚直接驱动，其配置低
+电平则点亮LED，配置高电平则LED 熄灭。给出了LED的引脚配置和参数。
+LED引脚配置
+颜色 单片机引脚 IO类型 点亮电流
+绿色 PB0 5V容忍 约4mA
+红色 PB1 5V容忍 约4mA
+22
+
+--- Page 25 ---
+2.6 按键
+复位按键
+VCC_3V3
+NRST
+23
+5R
+1020
+K01
+%1
+SW1
+4 3
+10V C5 2 1
+1uF
+50mA
+0201
+2.7 BOOT启动设置
+开发板B型上的STM32芯片上有两个管脚BOOT0和BOOT1，这两个管脚在芯片复位时的
+电平状态决定了芯片复位后的启动方式。开发板B型的BOOT管脚配置如下图所示。默认情
+况下BOOT管脚均被拉低，上电从User Flash启动。其中R11和R14是空贴器件，用户可以
+使用镊子将其短接，使得单片机以不同的方式启动。
+Boot mood selection pins
+Boot mode Aliasing
+BOOT1 BOOT0
+X 0 Main Flash Memory Main Flash memory is selected as
+the boot space
+0 1 System memory System memory is selected as the
+boot space
+1 1 Embedded SRAM Embedded SRAM is selected as
+the boot space
+R11 5%
+VCC_3V3
+0402 10K NC
+10K
+R12 BOOT0
+5% 0402
+R13 10K BOOT1
+5% 0402
+R14 10K
+VCC_3V3
+0402 5% NC
+BOOT1 BOOT0 BOOT SOURCE
+X 0 User Flash
+0 1 System Memory
+1 1 Embedded SRAM
+通过短接NC电阻来改变BOOT引导方式。
+
+--- Page 26 ---
+2.7 CAN接口
+开发板B型为满足用户外接设备的需求，引出两路CAN，CAN1配置为PB8和PB9管脚，
+CAN2配置为PB12和PB13管脚。
+2.8 用户自定义接口
+为增强开发板的适用性，板载4个用户自定义接口，以2.54mm排针的形式引出，其原理图
+如下图所示。
+J33
+1
+PC0 1
+2
+PC1 2
+3
+PC2 3
+4
+PC3 4
+0.0A
+2.54mm 4PIN 单排直插针
+2.9 PWM接口
+开发板B型为方便用户使用PWM驱动的舵机等执行器，引出4路PWM。
+4路PWM 输出
+TIM1_CH1(PA8)
+TIM1_CH2(PA9) YC.DZ.S00743 TIM1_CH3(PA10) TIM1_CH4(PA11)
+[2] TIM1_CH1
+[2] TIM1_CH2 [2] TIM1_CH3 [2] TIM1_CH4
+J26
+2.54MM 3PI 1 2 3 N 1 2 3 VCC_5V J27 1 2 3 1 2 3 VCC_5V J28 1 2 3 1 2 3 VCC_5V J29 1 2 3 1 2 3 VCC_5V
+2.54MM 3PIN 2.54MM 3PIN 2.54MM 3PIN
+2.54mm间距插针
+2.54mm间距插针 2.54mm间距插针 2.54mm间距插针
+24
+
+--- Page 27 ---
+2.10 OLED接口
+为方便用户调试和显示部分参数，开发板B型配备OLED接口，用户可以购买OLED模块使用，
+详细使用方法可以参见开发板OLED功能说明。
+OLED 接口
+VCC_3V3
+OLED_RST [2] OLED_DC [2] SPI1_SCK [2] SPI1_MOSI [2] Button_AD [2]
+25
+72C
+Fp74V051020
+D11
+C
+A
+J31
+1 9 1 2
+9 2 3 L18 150mA 3 4 L19 150mA 4 5 8 5 6 8 6 7 7
+1.0A
+11257W90-7P-S D9
+52C
+Fp74V051020
+C
+A
+82C
+Fp74V051020
+L20 150mA
+D7
+C
+A
+D10
+62C
+Fp74V051020
+C
+A
+L21 150mA
+D8
+C
+A
+92C
+Fp74V051020
+L22 150mA
+2.11 传感器接口
+为满足用户需要接高压信号（大于5V）开关量传感器的需求，本开发板集成了四路带光耦隔
+离的接口，其中有两路是高电平有效，另外两路是低电平有效，用户可以根据选用的传感器自
+行安装。另外也可以根据原理图修改0ohm电阻自行配置高低电平。其原理图如下所示。每一
+路传感器接口型号为XH2.54插座，每个接口最大可提供2A电流。
+WAFER2.5-1X3P VCC_INPUTVCC_INPUTVCC_INPUTVCC_INPUT
+3.0A R39 NC S_INPUT1_H R43 R44 R40 R41
+4 5 4 5 J73.0 1 2 3 A 1 2 3 VCC_ R 0 0 R IN R R 4 4 2 8 PU 0 0 T 6 6 5 N 0 0 % 3 3 C S S _ _ I I N N P P U U T T 1 2 _ _ L H S_INPUT1_H 0 0 N R 6 C 03 0 0 N R 6 C 03 5% 0R 0603 5% 0R 0603 R46 0402 0.0 1 5 K1 U4 16 1 5 0 % KR4 0 7 402 VCC_3V3
+4 5 4 5 4 5 4 5 4 5 4 5 J J J 8 1 1 0 1 3 3 . . 0 0 1 2 3 1 2 3 1 2 3 A A 1 2 3 1 2 3 1 2 3 V V V C C C C C C _ _ _ R 0 R 0 R 0 R 0 R 0 0 I I I N N N R R R R R R 5 5 4 6 5 6 9 9 0 5 P P P U U U 0 0 0 0 0 0 T T T 6 6 6 6 6 6 N 5 5 N 5 0 0 0 0 0 0 % % % 3 3 3 3 3 3 C C S S S S S _ _ _ _ _ I I I I I N N N N N P P P P P U U U U U T T T T T 2 3 3 4 4 _ _ _ _ _ L H L H L S S S S S S S _ _ _ _ _ _ _ 0 I I I I I I I 6 N N N N N N N 0 P P P P P P P 3 U U U U U U U 5 T T T T T T T % 1 2 2 3 4 4 3 _ _ _ _ _ _ _ L L H H H L L R6 0 5 1 R % NC R6 0 0 2 6 R 03 R 0 N 0 R 6 C 6 3 03 R 0 0 R R 6 6 5 3 3 0 4 0 0 0 3 0 R m m 4 5 A A D D 0 7 2 1 1 默 0 0 9 7 . 4 0 认 1 0 5 K 2 低 0 红 红 .0 电 R 3 1 5 0 K 5 平 D m 2 1 A 有 0 D 8 4 1 效 0 6 2 ， 0 红 .0 实 1 3 红 5 K 0 际 mA 使 2 3 4 5 6 7 8 用可以 T 自 LP 行 29 配 1 置 -4 9 1 1 1 1 1 1 电 0 1 2 3 4 5 阻。 S S S S _ _ _ _ O O O O U U U U 1 1 1 5 5 5 T T T T 0 0 0 % % % 1 2 3 4 K K K R R R [ [ [ [ 5 5 5 2 2 2 2 0 0 0 3 1 8 ] ] ] ] 4 4 4 0 0 0 2 2 2 V V V C C C C C C _ _ _ 3 3 3 V V V 3 3 3
+四路传感器输入接口
+
+--- Page 28 ---
+2.12 四路可控电源输出接口
+开发板B型有四个电源输出接口，每一个电源接口都由一个PMOS来控制是否输出电源。其
+原理图如下图所示。每一路可输出最大电流为2A，插座型号为XH2.54。
+VCC_INPUT
+VCC_OUT1
+J3
+3 4 3 4 1 2 VC 1 2 C_OUT1
+[2] POWER1_CTRL 3.0A WAFER2.5-1X2P
+VCC_INPUT
+VCC_OUT2
+VCC_OUT2 [2] POWER2_CTRL
+VCC_INPUT
+VCC_OUT3
+VCC_OUT3
+[2] POWER3_CTRL
+VCC_INPUT
+VCC_OUT4
+VCC_OUT4 [2] POWER4_CTRL
+26
+%5
+2040
+53RK01
+L24 150mA
+1 Q6 PMBT3904-215
+3
+2
+J5
+3 4 3 4 1 2 1 2
+3.0A WAFER2.5-1X2P
+L26 150mAR37 1K 0402 0.05
+%5
+2040
+12RK01
+Q1
+TPCA8122
+3
+2 1
+4
+5
+6 7
+8
+53C
+Fp74V051020
+R25 1K 0402 0.05
+%5
+2040
+%5
+2040
+03RK01
+43RK01
+R19 1K 0402 0.05
+L25 150mA
+%5
+2040
+81RK01
+Q3
+TPCA8122
+3
+2
+1
+J4
+3 4 3 4 1 2 1 2
+3.0A
+WAFER2.5-1X2P
+4
+5
+6
+7
+8
+02R
+1020
+K01 %1
+%5
+2040
+92RK01
+Q7
+TPCA8122
+3
+2
+1
+4
+5
+6
+7
+8
+03C
+Fp74V051020
+72R
+1020
+K01
+%1
+%5
+2040
+71RK01
+1 Q4 PMBT3904-215 3
+2
+L23 150mA
+R31 1K 0402 0.05
+J6
+1 Q8 3 4 3 4 1 2 1 2 PMBT3904-215 3.0A
+WAFER2.5-1X2P
+33R
+1020
+K01
+%1
+3
+2
+1 Q2 PMBT3904-215
+13C
+Fp74V051020
+73C
+Fp74V051020
+3
+2
+Q5
+TPCA8122
+3
+2
+1
+4
+5
+6
+7
+8
+83R
+1020
+K01%1
+%5
+2040
+22RK01
+4路可控电源输出
+
+--- Page 29 ---
+RoboMaster 开发板 OLED
+简 介
+RoboMaster 开发板 OLED 专 为 RoboMaster 开发板 A 型 和RoboMaster 开发板 B 型设计。
+OLED 带有一个 0.96 英寸，分辨率为 128 × 64 的 OLED 屏幕以及一个五维按键。OLED 采
+用SPI 通讯的方式，其驱动芯片为 SH1106G。
+接口示意图
+1
+2
+3
+1. 7-Pin接口，如图所示从左到右线序分别为：
+BUTTON AD、SPI2 MOSI、SPI2-SCK、OLED-DC、OLED-RST、GND、VCC-3V3。
+2. OLED屏幕。
+3. 五维按键安装孔：将包装内的五维按键按压至该孔进行固定。安装后，五维按键支持上、下、
+左、右及中间五个方向的操作，查看五维按键说明章节了解详细信息。
+特征参数
+项目 参数
+额定电压 3.3V
+最大工作电流* 10mA
+OLED通信接口 SPI
+按键 五维键
+重量 9 g
+尺寸（长宽） 37×45 mm
+屏幕分辨率 128×64
+屏幕尺寸 0.96英寸
+工作温度范围 0 ~ 50 ℃
+* 室温25℃、通风良好的实验环境下测得。
+27
+
+--- Page 30 ---
+功能说明
+OLED模块采用SPI通讯的方式，其驱动芯片为SH1106G。扩展OLED模块的通用性，该模
+块集成一个五向按键，为节省信号线，五个按键共用一个管脚，采用AD采集键值，以分压的
+方式，将五个按键五等分，其参考分压表如下表所示。
+按键 阻值 电压 AD参考值(12bit)
+中间 0 0 0
+左 26.1 0.683029 847.7843
+右 73.2 1.394688 1731.104
+上 150 1.98 2457.6
+下 402 2.642629 3280.064
+J3
+R 0 2 402 3 1 3 % K 1 A B 4 R 04 3 02 3 1 0 % 9K Button_AD
+R4 0R 2 5
+0402 5% CEN COM
+Button_AD R 0 6 402 1 1 0 % M 3 C D 6 R 04 7 02 1 1 0 % 0K Button_AD
+7 8
+9 MT1 MT2 10
+MT3 MT4 VCC_3V3
+0.0
+R5 10K
+100K
+0402 1%
+R8 0R Button_AD
+0402 5%
+C7
+100nF
+25V
+0402
+28
+
+--- Page 31 ---
+参考初始化代码
+void InitOLED_MASTER_SH1106G(void)
+{
+Write_Command(0xAE); //DOT MARTIX DISPLAY OFF
+Write_Command(0x32); //SET PUMP VOLTAGE 8v
+Write_Command(0x40); //SET DISPLAY START LINE(40H-7FH)
+Write_Command(0x81); //CONTARST CONTROL(00H-0FFH)
+Write_Command(CONTRAST);
+Write_Command(0xA1); //SET SEGMENT RE-MAP(0A0H-0A1H)
+Write_Command(0xA4); //ENTIRE DISPLAY OFF(0A4H-0A5H)
+Write_Command(0xA6); //SET NORMAL DISPLAY(0A6H-0A7H)
+Write_Command(0xA8); //SET MULTIPLEX RATIO 64
+Write_Command(0x3F);
+Write_Command(0xAD); //SET DC/DC BOOSTER(8AH=OFF,8BH=ON)
+Write_Command(0x8B);
+Write_Command(0xC8); //COM SCAN COM1-COM64(0C8H,0C0H)
+Write_Command(0xD3); //SET DISPLAY OFFSET(OOH-3FH)
+Write_Command(0x00);
+Write_Command(0xD5); //SET FRAME FREQUENCY
+Write_Command(0x80);
+Write_Command(0xD9); //SET PRE_CHARGE PERIOD
+Write_Command(0x1F);
+Write_Command(0xDA); //COM PIN CONFIGURATION(02H,12H)
+Write_Command(0x12);
+Write_Command(0xDB); //SET VCOM DESELECT LEVEL(35H)
+Write_Command(0x40);
+Write_Command(0xAF); //DSPLAY ON
+}
+29
+
+--- Page 32 ---
+RoboMaster 开发板 A 型 丝印及引脚定义图
+30
+
+--- Page 33 ---
+RoboMaster 开发板 B 型 丝印及引脚定义图
+（正面）
+31
+
+--- Page 34 ---
+（背面）
+32
+
+--- Page 35 ---
+WWW.ROBOMASTER.COM
+Copyright © 2018 大疆创新 版权所有
+

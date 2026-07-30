@@ -1,0 +1,36 @@
+﻿[1/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/sysmem.c.obj
+[2/28] Building ASM object CMakeFiles/A_board_pwm_driver_test.dir/startup_stm32f427xx.s.obj
+[3/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/tool.c.obj
+[4/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/main.c.obj
+[5/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/tim.c.obj
+[6/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/gpio.c.obj
+[7/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+[8/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/stm32f4xx_it.c.obj
+[9/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/syscalls.c.obj
+[10/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/pwm.c.obj
+[11/28] Building C object CMakeFiles/A_board_pwm_driver_test.dir/Core/Src/pwm_platform_ops.c.obj
+[12/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+[13/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+[14/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+[15/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
+[16/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+[17/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
+[18/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
+[19/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+[20/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
+[21/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+[22/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
+[23/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+[24/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+[25/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+[26/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
+[27/28] Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
+[28/28] Linking C executable A_board_pwm_driver_test.elf
+Memory region         Used Size  Region Size  %age Used
+
+             RAM:        1784 B       192 KB      0.91%
+
+          CCMRAM:           0 B        64 KB      0.00%
+
+           FLASH:       11504 B         2 MB      0.55%
+

@@ -1,0 +1,84 @@
+ESP32-CAM Wi-Fi+BT SoC 模组V1.0
+ESP32-CAM 模组
+特性 概述
+-体积超小的802.11b/g/n Wi-Fi +BT/BLE SoC ESP32-CAM拥有业内极富竞争力的小尺寸摄
+模块 像头模组，该模块可以作为最小系统独立工
+-采用低功耗双核32位CPU，可作应用处理器 作，尺寸仅为27*40.5*4.5mm，深度睡眠电流
+-主频高达240MHz，运算能力高达600DMIPS 最低达到6mA。
+-内置520KB SRAM，外置4MPSRAM ESP-32CAM可广泛应用于各种物联网场合，
+-支持UART/SPI/I2C/PWM/ADC/DAC等接口 适用于家庭智能设备、工业无线控制、无线监
+-支持OV2640和OV7670摄像头，内置闪光灯 控、QR无线识别，无线定位系统信号以及其
+-支持图片WiFI上传 它物联网应用，是物联网应用的理想解决方
+-支持TF卡 案。
+-支持多种休眠模式。 ESP-32CAM采用DIP封装，直接插上底板即
+-内嵌Lwip和FreeRTOS 可使用，实现产品的快速生产，为客户提供高
+-支持STA/AP/STA+AP 工作模式 可靠性的连接方式，方便应用于各种物联网硬
+-支持Smart Config/AirKiss 一键配网 件终端场合。
+-支持串口本地升级和远程固件升级（FOTA）
+第1页共4页
+ESP32-CAM Wi-Fi+BT SoC 模组V1.0
+产品技术规格
+模块型号 ESP32-CAM
+封装 DIP-16
+尺寸 27*40.5*4.5（±0.2）mm
+SPIFlash 默认32Mbit
+RAM 内部520KB+外部4M PSRAM
+蓝牙 蓝牙4.2BR/EDR和BLE标准
+Wi-Fi 802.11b/g/n/e/i
+支持接口 UART、SPI、I2C、PWM
+支持TF卡 最大支持4G
+IO口 9个
+串口速率 默认115200bps
+图像输出格式 JPEG(仅OV2640支持),BMP,GRAYSCALE
+频谱范围 2412~2484MHz
+天线形式 板载PCB天线,增益2dBi
+802.11b:17±2dBm (@11Mbps)
+发射功率 802.11g: 14±2dBm (@54Mbps)
+802.11n:13±2dBm (@MCS7)
+CCK,1Mbps : -90dBm
+CCK,11Mbps: -85dBm
+接收灵敏度 6Mbps(1/2 BPSK): -88dBm
+54Mbps(3/4 64-QAM):-70dBm
+MCS7(65 Mbps, 72.2Mbps): -67dBm
+关闭闪光灯:180mA@5V
+开启闪光灯并且亮度调到最大:310mA@5V
+功耗 Deep-sleep:最低功耗可以达到6mA@5V
+Moderm-sleep:最低可达到20mA@5V
+Light-sleep:最低可达到6.7mA@5V
+安全性 WPA/WPA2/WPA2-Enterprise/WPS
+供电范围 5V
+工作温度 -20℃~85 ℃
+存储环境 -40℃~90 ℃,< 90%RH
+第2页共4页
+ESP32-CAM Wi-Fi+BT SoC 模组V1.0
+重量 10g
+ESP32-CAM模块图片输出格式速率
+大小
+格
+QQVGA QVGA VGA SVGA
+式
+JPEG 6 7 7 8
+BMP 9 9 - -
+GRAYSCALE 9 8 - -
+测试环境：摄像头型号：OV2640 XCLK:20MHz,模块通过WiFi传输图片到电脑浏览器
+管脚定义
+CAM ESP32 SD ESP32
+D0 PIN5 CLK PIN14
+D1 PIN18 CMD PIN15
+D2 PIN19 DATA0 PIN2
+D3 PIN21 DATA1/闪光灯 PIN4
+D4 PIN36 DATA2 PIN12
+D5 PIN39 DATA3 PIN13
+D6 PIN34
+D7 PIN35
+XCLK PIN0
+PCLK PIN22
+VSYNC PIN25
+HREF PIN23
+SDA PIN26
+SCL PIN27
+POWER PIN PIN32
+第3页共4页
+ESP32-CAM Wi-Fi+BT SoC 模组V1.0
+最小系统图
+第4页共4页
