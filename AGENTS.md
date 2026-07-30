@@ -121,6 +121,22 @@ DS2026/
 - **外设配置**: CubeMX生成初始化代码(.ioc)
 - 两板代码独立工程，各自编译烧录
 
+### Git与网络
+- **GitHub仓库**: https://github.com/liunian171/DS2026
+- **网络代理**: 公司网络无法直连GitHub，需使用 **DevSidecar** 代理
+  - DevSidecar默认代理端口: `127.0.0.1:31181`
+  - Git代理配置命令:
+    ```powershell
+    git config --global http.proxy "http://127.0.0.1:31181"
+    git config --global https.proxy "http://127.0.0.1:31181"
+    ```
+  - 推送完成后建议取消代理（避免影响其他工具）:
+    ```powershell
+    git config --global --unset http.proxy
+    git config --global --unset https.proxy
+    ```
+  - 启动DevSidecar后等待代理就绪再执行git push/pull
+
 ---
 
 ## 五、系统架构 (H题 - 车载平衡滚球)
