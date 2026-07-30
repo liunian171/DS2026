@@ -82,7 +82,8 @@ DS2026/
 │       ├── 17PM-J_手册提取.txt           # 步进电机手册原文
 │       ├── RM_A板_用户手册_提取.txt       # RM A板手册原文
 │       ├── RM_A板_使用说明提取.txt        # RM A板使用说明原文
-│       └── RM_OLED_使用说明_提取.txt      # RM OLED使用说明原文
+│       ├── RM_OLED_使用说明_提取.txt      # RM OLED使用说明原文
+│       └── 子工程索引.md                  # ★ 各子工程位置、Git、状态清单
 └── ref/                                 # 仅供参考(236MB),实际以用户明确信息为准
     ├── A_Board-Examples/               # RM A板官方样例(4个:PWM/Imu/RM_OLED/RemoteControl)
     ├── BluePill_Car/                    # 完整循迹小车工程(F103C8T6,A板可参考移植)
@@ -99,6 +100,36 @@ DS2026/
     ├── CameraWebServer/                   # ESP32-CAM Web服务器固件(Arduino, 含WiFi配网+HTTP图传)
     └── 2026电赛E题&H题解题技术方案....md    # 达尔闻E+H题解题方案(含H题建模+控制+调试)
 ```
+
+### 3.1 仓库定位与子工程关系
+
+**本仓库（DS2026）是总规划仓库**，只存放设计文档和参考资料，**不存放具体代码**。
+
+每个子工程独立维护自己的代码和仓库：
+
+```
+DS2026 (总规划/设计文档)
+├── doc/H题设计/     ← 设计文档（本仓库的核心产出）
+├── ref/             ← 参考资料（手册、开源方案、样例外）
+├── AGENTS.md        ← 全局引导文件（本文档）
+│
+├──→ A板工程         位置: D:\HALcubemx\Apart_Board (CubeIDE)
+│      独立的代码仓库，包含 doc/开发跟踪.md / 调试记录.md / 引脚映射表.md
+│
+├──→ B板工程         位置: (独立CubeIDE工程, 待创建)
+│      独立的代码仓库
+│
+└──→ ESP32-CAM 工程  位置: C:\Users\27074\Documents\PlatformIO\Projects\ESP32 (PlatformIO)
+       独立的代码仓库，包含 doc/开发跟踪.md / 调试记录.md / 引脚映射表.md
+```
+
+**各子工程详细位置和状态见** `doc/H题设计/子工程索引.md`。
+
+**开发规范**：
+- 开发前先读 `AGENTS.md` + 对应子工程的 `doc/开发跟踪.md`
+- 代码只提交到子工程自己的 git 仓库
+- 子工程完成阶段性成果后，回写进度到 `doc/H题设计/子工程索引.md`
+- 本仓库 commit 粒度：每完成一个设计文档更新 → commit
 
 ---
 
