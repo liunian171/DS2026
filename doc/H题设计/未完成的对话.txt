@@ -1,0 +1,252 @@
+读取当前项目文件夹，了解当前项目的思想流程，现在对h题题目中相关硬件+代码程序思路流进行搭建；
+The user wants me to read the current project folder structure and understand the project's design thinking, then help them build the hardware + code program architecture for the H-topic competition. Let me start by exploring the project structure and reading key documents.
+
+Let我先全面了解项目结构和设计文档，再梳理H题的硬件+代码程序思路。
+
+Let me read the key documents to understand the project:
+
+The H-topic task details and constraints
+The device selection plan
+The confirmed device parameters
+The A-board car logic modeling
+The B-board RM A board development guide
+The reference summary
+Let me read these in parallel.
+
+Now I have a comprehensive understanding of the project. Let me also read the H-topic original text and the official Q&A to get the complete picture.
+
+Let me also quickly look at the reference projects to understand the code structure.
+
+But now I have enough information to understand the project. Let me summarize what the user is asking:
+
+The user wants me to "对h题题目中相关硬件+代码程序思路流进行搭建" - build the hardware + code program flow architecture for the H-topic.
+
+Let me also check if there are any existing source code projects to understand the code structure better.
+
+Let me now synthesize all the information I've gathered and present a comprehensive hardware + code program flow architecture.
+
+Let me check the ref directory structure and see what reference code exists.
+
+Let我再快速查看ref目录下的参考代码结构，确认实际可复用的代码资源。
+
+Now I have a comprehensive understanding of the entire project. The user wants me to build a hardware + code program flow architecture for the H-topic. Let me now synthesize everything and present the complete architecture in a well-organized document.
+
+Let me create a comprehensive architecture document that covers:
+
+System hardware architecture (block diagram)
+Code program flow architecture (for both A board and B board)
+Module-level design
+Communication protocol
+Control algorithm flow
+Task state machine
+I should write this to the doc/H题设计/ directory as a new document.
+
+Let me think about what to write:
+
+H题_硬件与代码程序思路流.md
+1. 系统硬件总架构
+整体框图: A板(F103ZET6) + B板(RM A型板 F427) + ESP32-CAM + K230D + 手机
+供电网络拓扑
+数据流拓扑
+2. A板硬件架构与代码流
+硬件连接图: F103ZET6 ←→ 红外阵列/TB6612/MG513P×2/SSD1306/按键
+软件模块分层图
+主循环时序图
+任务状态机流程图
+巡线PD控制流
+速度闭环PID控制流
+A点停车检测逻辑流
+3. B板硬件架构与代码流
+硬件连接图: F427 ←→ TMC2209/17PM步进/K230D/A板UART
+软件模块分层图
+球杆控制架构
+步进电机STEP/DIR控制流
+K230D数据接收解析流
+前馈补偿计算流
+4. 通信协议流
+A板→B板 UART数据帧时序
+K230D→B板 UART数据帧时序
+ESP32-CAM WiFi图传流
+5. 控制算法数据流
+小球位置环（外环PID）
+摆杆角度环（内环PID/串级）
+前馈补偿：小车运动→摆杆预补偿
+速度规划S曲线
+6. 开发移植路线图
+参考工程→目标平台映射
+自底向上移植顺序
+逐模块测试计划
+Let me write this now.
+
+现在我已全面理解了项目结构和设计思想。让我为H题搭建一份完整的 硬件+代码程序思路流 架构文档。
+
+写完了后，现在你需要一步一步向我确认和解释每个功能是否合理，
+The user wants me to first write the architecture document, then go through it step by step to confirm and explain each function's reasonableness with them. Let me first create the document, and then we can go through it interactively.
+
+Let me write the comprehensive architecture document first.
+
+好的，我先完成文档编写，然后逐模块和你确认。
+
+The document has been written. Now I need to go through each section step by step with the user, confirming and explaining the reasonableness of each function. Let me start by presenting an overview of the document structure and then go through each major section.
+
+Let me present the document structure and start confirming section by section. I'll break it into logical groups for the user to confirm.
+
+文档已完成。现在按模块逐一和你确认，从顶层到底层。我先列举文档结构概览：
+
+文档十大模块总览
+编号	模块	内容
+一	系统硬件总架构	整体框图、供电拓扑、数据流拓扑
+二	A板硬件与代码流	引脚规划、软件分层、主循环时序、状态机、巡线PD、速度PID、A点停车
+三	B板硬件与代码流	引脚规划、软件分层、主循环、球杆串级控制、步进STEP/DIR、K230D接收
+四	A→B通信协议	帧格式(10字节)、发送时序、接收解析
+五	ESP32-CAM图传流	独立子系统，WiFi单向传输
+六	控制算法数据流	球杆数学模型、串级PID框图、S曲线速度规划、各任务速度策略
+七	安全与异常处理	钢球脱落、通信丢失、步进失步
+八	开发移植路线	自底向上P0~P5，参考工程→目标平台
+九	关键参数汇总	待实测确认的参数列表
+现在我们开始逐一确认。先从模块一开始：系统硬件总架构，你看了觉得有什么疑问或不合理的地方吗？
+
+总的看上去没有问题，但是不知道每个模块和赛题需要的功能之间有什么关系；接下来的对话形式是你解释然后你猜列出几个回答方向，我进行确认
+The user wants me to go through each module and explain how each hardware/code module relates to the specific competition tasks. For each module, I should:
+
+Explain what it does
+List a few answer/confirmation directions for the user to choose from
+Wait for user confirmation
+Let me start with Module One - System Hardware Architecture, and map each piece to the competition tasks.
+
+Let me organize this by module, and for each, explain the relationship to the specific H-topic tasks (Tasks 1-6), then give confirmation options.
+
+Let me start going through it systematically.
+
+明白。我从模块一：系统硬件总架构开始，逐一解释每个部分和赛题任务的关系，然后给出确认选项。
+
+模块一：系统硬件总架构 → 与赛题任务的关系
+1. A板 F103ZET6 (循迹主控)
+直接服务 第2项(循线一圈16分) + 第4项(AB段20分) + 第5项(整圈20分) + 第6项(任意位置20分)
+
+所有需要小车移动的任务都由A板控制
+红外循迹 → 保证小车沿黑线行驶（不脱线=不失败）
+电机速度PID → 保证行驶速度满足时间限制
+计时显示SSD1306 → 第2项要求按键启动时计时并显示
+A点停车 → 第2/5/6项的终点精度要求（≤2cm）
+向B板发送运动状态 → 第4/5/6项球稳定必须知道小车加速度
+2. B板 RM A型板 F427 (摆杆控制主控)
+直接服务 第3项(静态球控制13分) + 第4/5/6项(运动中球稳定60分)
+
+TMC2209+步进电机 → 控制摆杆角度，进而控制球位置
+K230D球位置接收 → 闭环控制必须知道球实际位置
+接收A板运动状态 → 运动前馈补偿，克制加减速/转弯对球的扰动
+球杆串级PID → 核心控制算法
+3. ESP32-CAM (图传)
+独立服务 第1项(图传6分)
+
+不参与任何控制，纯单向WiFi图传
+固定于凹槽上方拍摄钢球滚动画面
+手机接收+录屏
+4. K230D (球位置视觉)
+服务 第3/4/5/6项 → B板的"眼睛"
+
+摄像头检测凹槽内钢球位置坐标
+UART发送给B板做反馈
+5. 供电系统
+服务所有任务 → 14.8V电池保证全系统运行
+
+动力与控制分路避免电压跌落导致MCU复位
+满电16.8V到放电截止之间要保证所有模块正常工作
+问题：以上硬件→赛题任务的对应关系，你认为：
+
+The user is asking whether the B board can use its built-in MPU6500 IMU to provide its own acceleration measurements. And they want me to explain what measurements are needed.
+
+Let me think about this:
+
+The RM A board has a built-in MPU6500 (6-axis gyro + accelerometer) via SPI5
+The user previously said "RM A板不挂在管子上" - but the RM A board IS on the car platform, so its IMU CAN detect the car's overall motion (acceleration during braking/acceleration, centrifugal force during turns)
+So actually, the MPU6500 on the B board is mounted on the car chassis. It can:
+
+Measure linear acceleration (ax, ay, az) - which directly relates to the car's motion
+Measure angular velocity (wx, wy, wz) - which relates to turning
+This is actually very useful! Currently, the design has A板 sending motion state to B板 via UART. But if B板 uses its own MPU6500:
+
+Can directly measure acceleration without waiting for UART data (lower latency)
+Can measure the car's tilt/inclination
+Is independent of A板 communication
+However, there's a complexity: the car's acceleration measured by the IMU is in the IMU's body frame, while what we need for ball-beam compensation is the acceleration component along the ball's groove direction.
+
+Let me also think about what measurements are needed for the ball-beam control:
+
+Required measurements:
+
+Ball position (x in cm from center) - from K230D camera → feedback for outer loop
+Beam/rod angle (θ) - angle of the rod relative to horizontal - can be:
+Open-loop: calculated from step pulse count (but risk of missed steps)
+Closed-loop: needs an angle sensor (currently NONE specified!)
+Car acceleration (a_car) - the acceleration of the car platform:
+Could come from A板 UART (sends car speed/acceleration)
+Could come from B板 IMU (MPU6500 directly measures acceleration)
+Both could be used for redundancy
+Wait, the user's question is specifically about whether B板 can use its built-in IMU. Let me address this:
+
+Key insight: The B板 MPU6500 is on the car body, not on the rod. So it measures the CAR's acceleration, NOT the rod's angle.
+
+For the ball-beam control:
+
+We need car acceleration for feedforward → Yes, MPU6500 can provide this! Possibly better than UART from A板 because lower latency
+We need rod angle → IMU is NOT on the rod (user confirmed RM A板不挂在管子上), so MPU6500 can't measure rod angle
+Actually wait - let me reconsider. The MPU6500 on the B board CAN provide:
+
+Car acceleration (ax, ay) - direct measurement for feedforward
+Car angular velocity (gyro z) - for detecting turns
+Car tilt - if the car body tilts
+This could potentially REPLACE or SUPPLEMENT the A板→B板 UART communication for acceleration data. But A板 still needs to send:
+
+Start/stop signals
+Curve detection flags (though IMU could detect turns by angular velocity)
+Speed information (though not strictly needed if IMU gives acceleration)
+Let me present this analysis to the user with options.
+
+好问题。让我分析一下。
+
+当前需要的测量值分析
+球杆控制系统需要3个核心测量量：
+测量量	当前方案来源	用途
+球位置 x (cm)	K230D摄像头 → UART → B板	外环PID反馈
+摆杆角度 θ	❓ 目前缺失！	内环PID反馈
+小车加速度 a_car	A板 → UART → B板	前馈补偿
+关于B板内置MPU6500：可以用，但用途不是测摆杆角度
+你之前确认过RM A板不挂在管子上，所以MPU6500测的是小车车身的加速度，而不是摆杆的倾角。
+
+但它的价值在于：
+
+替代/补充A板UART加速：MPU6500直接测量小车加速度（ax/ay/az），比UART从A板传过来更快（零延迟），也不怕通信丢帧
+检测转弯：陀螺仪z轴角速度可直接检测小车是否在弯道（无需等A板发弯道标志）
+车身姿态：检测小车是否倾斜，辅助判断
+目前缺失的是摆杆角度反馈——你打算怎么测摆杆的实时角度？
+
+继续。现在进入A板内部的代码逻辑确认。
+
+A板任务状态机（核心调度）
+当前设计的状态机：
+
+IDLE → (按键) → INIT → LINE_FOLLOWING ──────────→ STOP
+                         ↑        │
+                         │   ┌────┴────┐
+                         │   │ 路段判断│
+                         │   ├─STRAIGHT┤ 直线:高速
+                         │   ├─CURVE   │ 弯道:减速转向
+                         │   └─────────┘
+                         │        │
+                         └── 未到圈数── A_POINT_CHECK
+                                          │
+                                      圈数够了 → STOP
+状态机有三个关键点需要和你确认：
+
+1. 直线/弯道判断逻辑
+方案A：用红外阵列偏差的变化率判断 — 偏差持续增大=入弯，偏差趋于恒定=出弯
+方案B：用里程计判断 — 编码器累计距离，按场地几何（1.5m直线→0.5m半圆弧→1.5m直线→...）推断当前路段
+方案C：两者结合 — 红外判断为主，里程计辅助校正
+
+2. 启停线（A点）误触问题
+A点启停线是横向黑线（5cm），小车正常循线时会在途经A点的追踪线上也经过这条横线。如果小车只是经过（还没跑完），不能误停车。
+
+3. 任务模式切换
+不同任务项（第2/4/5/6项）速度策略不同，A板怎么知道当前执行哪个任务？
