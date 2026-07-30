@@ -1,0 +1,180 @@
+/**
+ * 天猛星 MSPM0G3507 教学小车引脚配置。
+ * 上电时电机 PWM、方向、STBY 和 VM_EN 均保持关闭。
+ */
+//@cliArgs --device "MSPM0G350X" --package "LQFP-64(PM)" --part "Default"
+//@v2CliArgs --device "MSPM0G3507" --package "LQFP-64(PM)"
+// @cliArgs --rtos nortos
+
+const GPIO     = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1    = GPIO.addInstance();
+const PWM      = scripting.addModule("/ti/driverlib/PWM", {}, false);
+const PWM1     = PWM.addInstance();
+const PWM2     = PWM.addInstance();
+const CAPTURE  = scripting.addModule("/ti/driverlib/CAPTURE", {}, false);
+const CAPTURE1 = CAPTURE.addInstance();
+const CAPTURE2 = CAPTURE.addInstance();
+const UART     = scripting.addModule("/ti/driverlib/UART", {}, false);
+const UART1    = UART.addInstance();
+const UART2    = UART.addInstance();
+const UART3    = UART.addInstance();
+const UART4    = UART.addInstance();
+const I2C      = scripting.addModule("/ti/driverlib/I2C", {}, false);
+const I2C1     = I2C.addInstance();
+const SPI      = scripting.addModule("/ti/driverlib/SPI", {}, false);
+const SPI1     = SPI.addInstance();
+const SYSCTL   = scripting.addModule("/ti/driverlib/SYSCTL");
+
+GPIO1.$name = "GPIO_MOTOR_SAFE";
+GPIO1.associatedPins.create(7);
+
+GPIO1.associatedPins[0].$name        = "M1_IN1";
+GPIO1.associatedPins[0].pin.$assign  = "PB17";
+GPIO1.associatedPins[0].initialValue = "CLEARED";
+
+GPIO1.associatedPins[1].$name        = "M1_IN2";
+GPIO1.associatedPins[1].pin.$assign  = "PB18";
+GPIO1.associatedPins[1].initialValue = "CLEARED";
+
+GPIO1.associatedPins[2].$name        = "M2_IN1";
+GPIO1.associatedPins[2].pin.$assign  = "PB19";
+GPIO1.associatedPins[2].initialValue = "CLEARED";
+
+GPIO1.associatedPins[3].$name        = "M2_IN2";
+GPIO1.associatedPins[3].pin.$assign  = "PB20";
+GPIO1.associatedPins[3].initialValue = "CLEARED";
+
+GPIO1.associatedPins[4].$name        = "MOTOR12_STBY";
+GPIO1.associatedPins[4].pin.$assign  = "PB24";
+GPIO1.associatedPins[4].initialValue = "CLEARED";
+
+GPIO1.associatedPins[5].$name        = "MOTOR_VM_EN";
+GPIO1.associatedPins[5].pin.$assign  = "PB25";
+GPIO1.associatedPins[5].initialValue = "CLEARED";
+
+GPIO1.associatedPins[6].$name        = "STATUS_LED";
+GPIO1.associatedPins[6].pin.$assign  = "PB22";
+GPIO1.associatedPins[6].initialValue = "CLEARED";
+
+/* M1/M2: TIMG7 双通道，32 MHz / 1600 = 20 kHz。 */
+PWM1.$name                      = "PWM_MOTOR12";
+PWM1.clockPrescale              = 1;
+PWM1.timerCount                 = 1600;
+PWM1.peripheral.$assign         = "TIMG7";
+PWM1.peripheral.ccp0Pin.$assign = "PA26";
+PWM1.peripheral.ccp1Pin.$assign = "PA27";
+PWM1.PWM_CHANNEL_0.$name        = "M1_PWM";
+PWM1.PWM_CHANNEL_0.dutyCycle    = 0;
+PWM1.PWM_CHANNEL_1.$name        = "M2_PWM";
+PWM1.PWM_CHANNEL_1.dutyCycle    = 0;
+
+/* 四路舵机共用 50 Hz 周期，默认 0% 避免上电误动作。 */
+PWM2.$name                      = "PWM_SERVO";
+PWM2.clockPrescale              = 32;
+PWM2.timerCount                 = 20000;
+PWM2.ccIndex                    = [0, 1, 2, 3];
+PWM2.peripheral.$assign         = "TIMA0";
+PWM2.peripheral.ccp0Pin.$assign = "PA0";
+PWM2.peripheral.ccp1Pin.$assign = "PA1";
+PWM2.peripheral.ccp2Pin.$assign = "PB4";
+PWM2.peripheral.ccp3Pin.$assign = "PA28";
+PWM2.PWM_CHANNEL_0.$name        = "SERVO1_PWM";
+PWM2.PWM_CHANNEL_0.dutyCycle    = 0;
+PWM2.PWM_CHANNEL_1.$name        = "SERVO2_PWM";
+PWM2.PWM_CHANNEL_1.dutyCycle    = 0;
+PWM2.PWM_CHANNEL_2.$name        = "SERVO3_PWM";
+PWM2.PWM_CHANNEL_2.dutyCycle    = 0;
+PWM2.PWM_CHANNEL_3.$name        = "SERVO4_PWM";
+PWM2.PWM_CHANNEL_3.dutyCycle    = 0;
+
+/* 每个 AB 编码器使用一个双通道捕获定时器，方向由软件译码。 */
+CAPTURE1.$name                       = "CAPTURE_ENCODER_M1";
+CAPTURE1.captureInputMode            = "multi";
+CAPTURE1.ccIndexMulti                = [0, 1];
+CAPTURE1.multi_countMode             = "DL_TIMER_COUNT_MODE_UP";
+CAPTURE1.multi_countRep              = "DL_TIMER_REPEAT_MODE_ENABLED";
+CAPTURE1.multi_cvae                  = "DL_TIMER_COUNT_AFTER_EN_ZERO";
+CAPTURE1.multi_ch0_captEdgeDetection = "DL_TIMER_CC_CCOND_TRIG_EDGE";
+CAPTURE1.multi_ch1_captEdgeDetection = "DL_TIMER_CC_CCOND_TRIG_EDGE";
+CAPTURE1.multi_ch0_input_filter      = false;
+CAPTURE1.multi_ch1_input_filter      = false;
+CAPTURE1.timerPeriod                 = "2 ms";
+CAPTURE1.interrupts                  = ["CC0_UP", "CC1_UP"];
+CAPTURE1.peripheral.$assign          = "TIMG6";
+CAPTURE1.peripheral.ccp0Pin.$assign  = "PB10";
+CAPTURE1.peripheral.ccp1Pin.$assign  = "PB11";
+
+CAPTURE2.$name                       = "CAPTURE_ENCODER_M2";
+CAPTURE2.captureInputMode            = "multi";
+CAPTURE2.ccIndexMulti                = [0, 1];
+CAPTURE2.multi_countMode             = "DL_TIMER_COUNT_MODE_UP";
+CAPTURE2.multi_countRep              = "DL_TIMER_REPEAT_MODE_ENABLED";
+CAPTURE2.multi_cvae                  = "DL_TIMER_COUNT_AFTER_EN_ZERO";
+CAPTURE2.multi_ch0_captEdgeDetection = "DL_TIMER_CC_CCOND_TRIG_EDGE";
+CAPTURE2.multi_ch1_captEdgeDetection = "DL_TIMER_CC_CCOND_TRIG_EDGE";
+CAPTURE2.multi_ch0_input_filter      = false;
+CAPTURE2.multi_ch1_input_filter      = false;
+CAPTURE2.timerPeriod                 = "2 ms";
+CAPTURE2.interrupts                  = ["CC0_UP", "CC1_UP"];
+CAPTURE2.peripheral.$assign          = "TIMG8";
+CAPTURE2.peripheral.ccp0Pin.$assign  = "PB15";
+CAPTURE2.peripheral.ccp1Pin.$assign  = "PB16";
+
+UART1.$name                    = "UART_DEBUG";
+UART1.profile                  = "CONFIG_PROFILE_1";
+UART1.targetBaudRate           = 115200;
+UART1.enableFIFO               = false;
+UART1.enableInternalLoopback   = false;
+UART1.peripheral.$assign       = "UART0";
+UART1.peripheral.txPin.$assign = "PA10";
+UART1.peripheral.rxPin.$assign = "PA11";
+
+UART2.$name                    = "UART_GYRO";
+UART2.profile                  = "CONFIG_PROFILE_1";
+UART2.targetBaudRate           = 115200;
+UART2.enableFIFO               = false;
+UART2.enableInternalLoopback   = false;
+UART2.enabledInterrupts        = ["RX", "OVERRUN_ERROR", "FRAMING_ERROR", "PARITY_ERROR", "NOISE_ERROR"];
+UART2.peripheral.$assign       = "UART1";
+UART2.peripheral.txPin.$assign = "PA8";
+UART2.peripheral.rxPin.$assign = "PA9";
+
+UART3.$name                    = "UART_LINE";
+UART3.profile                  = "CONFIG_PROFILE_1";
+UART3.targetBaudRate           = 115200;
+UART3.enableFIFO               = false;
+UART3.enableInternalLoopback   = false;
+UART3.enabledInterrupts        = ["RX", "OVERRUN_ERROR", "FRAMING_ERROR", "PARITY_ERROR", "NOISE_ERROR"];
+UART3.peripheral.$assign       = "UART3";
+UART3.peripheral.txPin.$assign = "PB12";
+UART3.peripheral.rxPin.$assign = "PB13";
+
+UART4.$name                    = "UART_EXP";
+UART4.profile                  = "CONFIG_PROFILE_1";
+UART4.targetBaudRate           = 115200;
+UART4.enableFIFO               = false;
+UART4.enableInternalLoopback   = false;
+UART4.peripheral.$assign       = "UART2";
+UART4.peripheral.txPin.$assign = "PA23";
+UART4.peripheral.rxPin.$assign = "PA24";
+
+I2C1.$name                   = "I2C_EXP";
+I2C1.basicEnableController   = true;
+I2C1.basicControllerBusSpeed = 400000;
+I2C1.peripheral.$assign      = "I2C1";
+I2C1.peripheral.sdaPin.$assign = "PB3";
+I2C1.peripheral.sclPin.$assign = "PB2";
+
+SPI1.$name                     = "SPI_EXP";
+SPI1.targetBitRate             = 1000000;
+SPI1.dataSize                  = 8;
+SPI1.peripheral.$assign        = "SPI1";
+SPI1.peripheral.sclkPin.$assign = "PB9";
+SPI1.peripheral.mosiPin.$assign = "PB8";
+SPI1.peripheral.misoPin.$assign = "PB7";
+SPI1.peripheral.cs0Pin.$assign  = "PB6";
+
+const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
+
+SYSCTL.forceDefaultClkConfig = true;
+SYSCTL.clockTreeEn = true;

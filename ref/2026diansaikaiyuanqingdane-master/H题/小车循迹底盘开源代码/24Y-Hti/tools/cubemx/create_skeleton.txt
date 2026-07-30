@@ -1,0 +1,6 @@
+load STM32F103C8Tx
+project name HtiCar
+project path C:\Users\25383\Desktop\24Y-Hti
+project toolchain Makefile
+config saveext C:\Users\25383\Desktop\24Y-Hti\HtiCar.ioc
+exit

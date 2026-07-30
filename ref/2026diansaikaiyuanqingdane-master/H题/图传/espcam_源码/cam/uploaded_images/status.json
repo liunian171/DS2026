@@ -1,0 +1,17 @@
+{
+  "has_image": true,
+  "updated_at": "2026-07-29 15:01:12",
+  "updated_unix_ms": 1785308472945,
+  "width": 320,
+  "height": 240,
+  "content_length": 3443,
+  "temperature_c": 34.0,
+  "humidity_rh": 36.0,
+  "eddy_current_v": 2.1,
+  "co_ppm": 38.0,
+  "methane_ppm": 90.0,
+  "pm25_ugm3": 105.0,
+  "flame_level_pct": 18.0,
+  "flame_detected": false,
+  "device_ip": "192.168.5.62"
+}

@@ -1,0 +1,4 @@
+config load C:\Users\25383\Desktop\24Y-Hti\HtiCar.ioc
+project path C:\Users\25383\Desktop\24Y-Hti
+project generate
+exit

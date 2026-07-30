@@ -1,0 +1,3 @@
+swmgr refresh
+swmgr install stm32cube_f1_1.8.6 ask
+exit

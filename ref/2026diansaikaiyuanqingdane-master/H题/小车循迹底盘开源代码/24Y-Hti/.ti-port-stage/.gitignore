@@ -1,0 +1,13 @@
+/build/
+/generated/
+*.map
+*.out
+*.hex
+*.bin
+*.obj
+*.o
+.ccsproject
+.cproject
+.project
+.settings/
+/.codex/

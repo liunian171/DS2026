@@ -1,0 +1,35 @@
+Open On-Chip Debugger 0.12.0+dev-00003-gcb22a31e5-dirty (2026-07-02-15:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "swd". To override use 'transport select <transport>'.
+Warn : Transport "swd" was already selected
+cortex_m reset_config sysresetreq
+adapter speed: 500 kHz
+Info : Using CMSIS-DAPv2 interface with VID:PID=0xfaed:0x4870, serial=031305621338
+Info : CMSIS-DAP: SWD supported
+Info : CMSIS-DAP: JTAG supported
+Info : CMSIS-DAP: Atomic commands supported
+Info : CMSIS-DAP: UART via USB COM port supported
+Info : CMSIS-DAP: FW Version = Horco v0.1
+Info : CMSIS-DAP: Interface Initialised (SWD)
+Info : SWCLK/TCK = 1 SWDIO/TMS = 1 TDI = 0 TDO = 1 nTRST = 0 nRESET = 1
+Info : CMSIS-DAP: Interface ready
+Info : clock speed 500 kHz
+Info : SWD DPIDR 0x6ba02477
+Info : [mspm0x.cpu] Cortex-M0+ r0p1 processor detected
+Info : [mspm0x.cpu] target has 4 breakpoints, 2 watchpoints
+Info : [mspm0x.cpu] Examination succeed
+Info : starting gdb server for mspm0x.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+[mspm0x.cpu] halted due to breakpoint, current mode: Thread 
+xPSR: 0xf1000000 pc: 0x00004004 msp: 0x20208000
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : accepting 'gdb' connection on tcp/3333
+Info : Data region NOT available!
+Info : dropped 'gdb' connection
+Info : accepting 'gdb' connection on tcp/3333
+[mspm0x.cpu] halted due to debug-request, current mode: Thread 
+xPSR: 0x61000000 pc: 0x00003602 msp: 0x20207f88
+Info : dropped 'gdb' connection

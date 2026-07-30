@@ -1,0 +1,110 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Exception occurred during processing of request fromException occurred during processing of request fromException occurred during processing of request fromException occurred during processing of request fromException occurred during processing of request from     ('192.168.5.62', 56764)('192.168.5.62', 58741)
+('192.168.5.62', 55903)('192.168.5.62', 58740)
+('192.168.5.62', 58742)
+
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+  File "D:\python\lib\http\server.py", line 420, in handle_one_request
+    method()
+  File "D:\ESP32_Project\2026\2026_3\aaa\camera_web_server.py", line 2401, in do_POST
+    body = self.rfile.read(content_length)
+  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+  File "D:\python\lib\http\server.py", line 420, in handle_one_request
+    method()
+  File "D:\ESP32_Project\2026\2026_3\aaa\camera_web_server.py", line 2401, in do_POST
+    body = self.rfile.read(content_length)
+  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+  File "D:\python\lib\http\server.py", line 400, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+----------------------------------------  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+  File "D:\python\lib\http\server.py", line 420, in handle_one_request
+    method()
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+----------------------------------------  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+  File "D:\python\lib\http\server.py", line 400, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+  File "D:\ESP32_Project\2026\2026_3\aaa\camera_web_server.py", line 2401, in do_POST
+    body = self.rfile.read(content_length)
+
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+----------------------------------------  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+--------------------------------------------------------------------------------
+
+----------------------------------------
+Exception occurred during processing of request from ('192.168.5.62', 60590)
+Traceback (most recent call last):
+  File "D:\python\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "D:\python\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "D:\python\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "D:\python\lib\http\server.py", line 432, in handle
+    self.handle_one_request()
+  File "D:\python\lib\http\server.py", line 420, in handle_one_request
+    method()
+  File "D:\ESP32_Project\2026\2026_3\aaa\camera_web_server.py", line 2401, in do_POST
+    body = self.rfile.read(content_length)
+  File "D:\python\lib\socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+----------------------------------------

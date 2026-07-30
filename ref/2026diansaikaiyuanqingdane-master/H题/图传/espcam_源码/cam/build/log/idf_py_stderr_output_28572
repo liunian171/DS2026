@@ -1,0 +1,41 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=1 D:\ESP32_Project\2026\2026_3\aaa
+Traceback (most recent call last):
+  File "D:\python\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "D:\python\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfgen\__main__.py", line 18, in <module>
+    main()
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfgen\core.py", line 724, in main
+    config = kconfiglib.Kconfig(args.kconfig, parser_version=parser_version)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 921, in __init__
+    self()
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 935, in __call__
+    prev = self._parse_block(None, self.top_node, self.top_node)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2633, in _parse_block
+    prev = self._parse_block(None, parent, prev)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2633, in _parse_block
+    prev = self._parse_block(None, parent, prev)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2670, in _parse_block
+    self._parse_block(_T_ENDMENU, node, node)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2585, in _parse_block
+    self._parse_props(node)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2782, in _parse_props
+    while self._tokenize_line():
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 1867, in _tokenize_line
+    self._tokens = self._tokenize(line)
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 2083, in _tokenize
+    self._parse_error("unterminated string")
+  File "C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\lib\site-packages\kconfiglib\core.py", line 3491, in _parse_error
+    raise KconfigError(
+kconfiglib.core.KconfigError: D:/ESP32_Project/2026/2026_3/aaa/main/Kconfig.projbuild:13: error: couldn't parse 'default "http://10.104.1.173:8000/upload': unterminated string
+CMake Error at D:/esp/552/v5.5.2/esp-idf/tools/cmake/kconfig.cmake:230 (message):
+  Failed to run kconfgen
+  (C:/Users/yyq/.espressif/python_env/idf5.5_py3.10_env/Scripts/python.exe;-m;kconfgen;--list-separator=semicolon;--kconfig;D:/esp/552/v5.5.2/esp-idf/Kconfig;--sdkconfig-rename;D:/esp/552/v5.5.2/esp-idf/sdkconfig.rename;--config;D:/ESP32_Project/2026/2026_3/aaa/sdkconfig;--env;IDF_MINIMAL_BUILD=n;--env-file;D:/ESP32_Project/2026/2026_3/aaa/build/config.env).
+  Error 1
+Call Stack (most recent call first):
+  D:/esp/552/v5.5.2/esp-idf/tools/cmake/build.cmake:704 (__kconfig_generate_config)
+  D:/esp/552/v5.5.2/esp-idf/tools/cmake/project.cmake:740 (idf_build_process)
+  CMakeLists.txt:6 (project)
+
+

@@ -1,0 +1,48 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "MSPM0G3507 Debug (GNU Arm)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/debug",
+      "toolchainFile": "${sourceDir}/cmake/arm-none-eabi-gcc.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "MSPM0G3507 Release (GNU Arm)",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "h-task",
+      "displayName": "MSPM0G3507 Full H-task (GNU Arm)",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build/h-task",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "H_TASK_APPLICATION": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "h-task",
+      "configurePreset": "h-task"
+    }
+  ]
+}

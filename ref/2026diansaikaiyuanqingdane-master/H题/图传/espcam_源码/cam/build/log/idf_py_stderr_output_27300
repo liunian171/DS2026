@@ -1,0 +1,32 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Users\yyq\.espressif\python_env\idf5.5_py3.10_env\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=1 D:\ESP32_Project\2026\2026_3\aaa
+CMake Error at C:/Users/yyq/.espressif/tools/cmake/3.30.2/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:67 (message):
+  The C compiler
+
+    "C:/Users/yyq/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: 'D:/ESP32_Project/2026/2026_3/aaa/build/CMakeFiles/CMakeScratch/TryCompile-i5lgjz'
+    
+    Run Build Command(s): C:/Users/yyq/.espressif/tools/ninja/1.12.1/ninja.exe -v cmTC_9d7fe
+    [1/2] C:\Users\yyq\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20251107\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles\cmTC_9d7fe.dir\testCCompiler.c.obj -c D:\ESP32_Project\2026\2026_3\aaa\build\CMakeFiles\CMakeScratch\TryCompile-i5lgjz\testCCompiler.c
+    FAILED: CMakeFiles/cmTC_9d7fe.dir/testCCompiler.c.obj 
+    C:\Users\yyq\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20251107\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles\cmTC_9d7fe.dir\testCCompiler.c.obj -c D:\ESP32_Project\2026\2026_3\aaa\build\CMakeFiles\CMakeScratch\TryCompile-i5lgjz\testCCompiler.c
+    thread 'main' panicked at 'assertion failed: `(left != right)`
+      left: `0`,
+     right: `0`: Failed to get path name. Error code: 5', main.rs:54:9
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    ninja: build stopped: subcommand failed.
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  D:/esp/552/v5.5.2/esp-idf/tools/cmake/project.cmake:589 (__project)
+  CMakeLists.txt:6 (project)
+
+

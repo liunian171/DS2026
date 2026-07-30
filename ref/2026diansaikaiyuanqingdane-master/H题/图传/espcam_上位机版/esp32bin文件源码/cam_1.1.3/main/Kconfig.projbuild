@@ -1,0 +1,20 @@
+menu "Camera Upload Configuration"
+
+config CAMERA_WIFI_SSID
+    string "Wi-Fi SSID"
+    default "yyq"
+
+config CAMERA_WIFI_PASSWORD
+    string "Wi-Fi Password"
+    default "12345678"
+
+config CAMERA_UPLOAD_URL
+    string "HTTP Upload URL"
+    default "http://10.104.1.173:8000/upload"
+
+config CAMERA_UPLOAD_INTERVAL_MS
+    int "Upload Interval (ms)"
+    range 500 60000
+    default 1000
+
+endmenu
