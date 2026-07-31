@@ -264,6 +264,17 @@ B,<frame_id>,<position_mm>,<state>\n
 - Windows只读枚举结果为Arduino Uno COM9和`OpenMV Cam USB COM Port (COM7)`；COM7暂为K230D候选，未打开验证。当前K230D的`B,...`帧只写物理UART2，USB控制台打印的是人类可读日志，双USB本身不会自动把位置帧传到UNO。
 - 用户选择采用电脑桥接：K230D镜像严格`B,...`帧到USB，电脑只过滤合法帧并转发到UNO COM9，调参命令也由同一桥接入口发送。
 - 原D2人工调平确认按键与最新D2方向输出冲突；需由用户确认改用电脑`ZERO`命令，或指定新的UNO物理按键引脚，确认前不自行占用引脚。
+- 用户确认当前不需要物理按键，采用人工调平后从电脑桥接控制台发送`ZERO`。
+
+### R07/R08软件实现结果
+
+- 当前`C:\Users\Y_cheng\Desktop\DS_26\k230_try.py`已增加`USB_BRIDGE_MIRROR_ENABLE=True`，把与UART2相同的严格4字段帧镜像到USB；脚本AST验证通过。该目录不是Git仓库，变更路径和验证结果在UNO/DS2026日志中追踪。
+- UNO工程新增电脑桥接程序，只接受严格`B,<frame>,<position_mm>,<state>`并转发到COM9；人类可读日志、非法状态、越界位置、超范围帧号和非ASCII行均拒绝。
+- UNO固件的所有日常参数集中在源码顶部；未经实测的PID增益、速率、加速度、回零速率和控制极性初值均为0。
+- `ARM`要求电脑`ZERO`、非零`KP/RATE/ACCEL/RETURNRATE`、`SIGN=±1`及200 ms内TRACK；上电锁定，非TRACK或超时按累计命令位置回零，`DISARM`立即锁定并使零位失效。
+- 非对称机械硬限位为顺时针+2133脉冲、逆时针-1066脉冲；仅是UNO累计命令位置，不冒充X42S实际编码器反馈。
+- Python协议/转发测试10项通过；K230脚本AST通过；UNO编译Flash 12954/32256 B、SRAM 457/2048 B。UNO提交`31a8ae5`。
+- 当前未打开COM7/COM9、未烧录新版UNO、未设置非零运动参数、未发送`ARM`、未输出电机脉冲。下一步先进行LOCKED状态的只读帧联调。
 
 ---
 
