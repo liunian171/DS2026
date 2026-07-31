@@ -275,6 +275,8 @@ B,<frame_id>,<position_mm>,<state>\n
 - 非对称机械硬限位为顺时针+2133脉冲、逆时针-1066脉冲；仅是UNO累计命令位置，不冒充X42S实际编码器反馈。
 - Python协议/转发测试10项通过；K230脚本AST通过；UNO编译Flash 12954/32256 B、SRAM 457/2048 B。UNO提交`31a8ae5`。
 - 当前未打开COM7/COM9、未烧录新版UNO、未设置非零运动参数、未发送`ARM`、未输出电机脉冲。下一步先进行LOCKED状态的只读帧联调。
+- 用户随后完成UNO烧录并运行K230D。computer-use只读检查确认UNO COM9持续输出`LOCKED/zero=0/frame=0/pulse=0`且所有运动参数为0；Arduino串口监视器已关闭释放COM9，没有发送文本。
+- CanMV状态栏确认COM7连接K230D Lushanpi Lite 128M、固件v1.8-0并正在预览，约35–38 FPS、TRACK、位置约-11.18 cm；但终端无`B,...`镜像，VS Code同时显示1个未保存文件。Agent未擅自保存或覆盖，等待用户先保存编辑器内容后再重新应用/核对USB镜像。
 
 ---
 
