@@ -121,6 +121,9 @@ DS2026 (总规划/设计文档)
 ├──→ B板工程         位置: (独立CubeIDE工程, 待创建)
 │      独立的代码仓库
 │
+├──→ UNO球衡杆原型    位置: C:\Users\Y_cheng\Documents\Arduino\BallBeam_UNO
+│      独立Git仓库，用于视觉外环+x42S脉冲位置闭环的算法开发与调参
+│
 └──→ ESP32-CAM 工程  位置: C:\Users\27074\Documents\PlatformIO\Projects\ESP32 (PlatformIO)
        独立的代码仓库，包含 doc/开发跟踪.md / 调试记录.md / 引脚映射表.md
 ```
@@ -152,6 +155,7 @@ DS2026 (总规划/设计文档)
 |--------|-----------|--------|--------|--------|
 | **A板**（循迹小车） | 待启动 | - | - | 创建 CubeIDE 工程，引脚配置 |
 | **B板**（摆杆控制） | 待启动 | - | - | 创建 CubeIDE 工程，引脚配置 |
+| **UNO球衡杆原型** | P0~P4软件初版 | 4字段视觉协议、位置PID框架、STEP/DIR规划、安全状态机 | 编译/主机协议测试 | 烧录后低速确认方向并调参 |
 | **ESP32-CAM**（图传） | P1 驱动层完成 | Camera驱动、WiFi AP、MJPEG流、Web控制页 | - | P2: SD卡录制功能 |
 
 ---
@@ -192,6 +196,14 @@ DS2026 (总规划/设计文档)
 - **板载电源管理**: LM25116(12V@10A), MP2233(3.3V@3A), TPS54540(可调5~12V@5A), 支持4~6S LiPo
 - **参考工程**: `ref/BluePill_Car/` (F103循迹小车完整工程) | `ref/A_board_pwm_driver_test/` (F427电机/串口/PWM架构)
 
+### UNO R3（当前球衡杆算法原型）
+- **工程路径**: `C:\Users\Y_cheng\Documents\Arduino\BallBeam_UNO`
+- **执行器**: x42S，Emm固件，使用STEP/DIR原始闭环脉冲模式；电机位置内环由x42S内部编码器+FOC完成
+- **视觉输入**: K230D UART 38400，冻结帧 `B,<frame_id>,<position_mm>,<state>\n`
+- **角度反馈**: 当前不使用AS5600；由累计STEP脉冲和已确认传动比估算梁角，机械回差不可观测
+- **零位/安全**: 手动调平后按D2确认；LOST立即回水平，有效TRACK数据超时200 ms回水平
+- **串级职责**: K230D只测量；UNO保存目标并运行位置外环；x42S运行电机位置内环
+
 ### 构建与烧录
 - **构建**: CubeIDE for VSCode中Build (CMake/Ninja)
 - **烧录调试**: ST-Link SWD下载调试
@@ -227,10 +239,11 @@ DS2026 (总规划/设计文档)
 
 ### B板 (摆杆控制主控 RM A型板 STM32F427IIH6)
 - 25cm PPR水管凹槽摆杆(铰链固定，h≥5cm)
-- 美蓓亚17PM-J347-G2VS步进电机+TMC2209紫板控制摆杆角度(STEP/DIR脉冲，无UART)
-- 庐山派Lite K230D(GC2093)检测球位置(UART通信)
+- x42S闭环步进执行器，Emm固件，STEP/DIR原始闭环脉冲模式；UART遥测保留给F427阶段
+- 庐山派Lite K230D(GC2093)发送相对中心O的球位置、帧号和识别状态(UART通信)
 - 球杆系统PID/LQR控制，接收A板运动状态做前馈补偿
 - RM A板不挂在管子上(不用于检测摆杆倾角)
+- 当前阶段不使用AS5600
 
 ### 图传装置 (ESP32-CAM 独立)
 - OV3660摄像头采集凹槽画面，WiFi图传(单向)
@@ -295,8 +308,7 @@ K230D ──UART有线──→ B板
 | 电机驱动 | TB6612 | A板 | 双路直流 |
 | 视觉 | 庐山派Lite K230D (GC2093) | B板 | UART输出球位置 |
 | 图传 | ESP32-CAM (OV3660) | 独立 | WiFi单向, 手机接收 |
-| 摆杆执行器 | 美蓓亚17PM-J347-G2VS | B板 | NEMA17, 两相四线双极 |
-| 步进驱动 | TMC2209国产紫板 | B板 | MAX 2A, 5.5-38V, MS1/MS2/MS3细分, STEP/DIR无UART |
+| 摆杆执行器 | x42S闭环步进 | UNO原型/后续B板 | Emm固件，STEP/DIR原始闭环脉冲模式，默认16细分待上电复核 |
 | 显示屏 | SSD1306 0.96" I2C | A板 | ≤2英寸, 装车载 |
 | 电池 | INR18650 4S2P (14.8V) | - | 车载供电 |
 | 图传接收 | 手机 | - | 接收WiFi+录屏 |
@@ -306,8 +318,9 @@ K230D ──UART有线──→ B板
 ### 待确认参数
 | 项目 | 说明 |
 |------|------|
-| 17PM-J347-G2VS电气参数 | J347未在手册中列出，需看标签/测电阻/问卖家 |
-| TMC2209紫板Vref默认值 | 需万用表测量确认 |
+| x42S STEP/DIR/EN输入电气接法 | 需按实物端口与手册接线页复核公共端、有效电平和电平兼容性 |
+| x42S实际细分 | 当前按默认16计算，烧录前需确认未被改写 |
+| 机械正方向 | UNO `DIRSIGN`必须通过低速实物测试确认 |
 
 ---
 
@@ -364,7 +377,7 @@ K230D ──UART有线──→ B板
 |--------|------|------|----------|
 | P0 | 底层定义 | 引脚映射、外设配置(CubeMX)、时钟配置 | A_Board-Examples / BluePill_Car |
 | P1 | 驱动层 | GPIO/UART/PWM/Timer/I2C/SPI驱动封装 | BluePill_Car/Core / A_Board-Examples/BSP |
-| P2 | 器件层 | 编码器/TB6612/TMC2209/SSD1306/K230D通信 | BluePill_Car / A_Board-Examples |
+| P2 | 器件层 | 编码器/TB6612/x42S/SSD1306/K230D通信 | BluePill_Car / A_Board-Examples / x42S手册 |
 | P3 | 控制层 | PID/巡线PD/球杆控制/速度规划 | BluePill_Car / 设计文档 |
 | P4 | 应用层 | 状态机/任务调度/通信协议 | 设计文档 |
 
