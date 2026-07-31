@@ -277,6 +277,9 @@ B,<frame_id>,<position_mm>,<state>\n
 - 当前未打开COM7/COM9、未烧录新版UNO、未设置非零运动参数、未发送`ARM`、未输出电机脉冲。下一步先进行LOCKED状态的只读帧联调。
 - 用户随后完成UNO烧录并运行K230D。computer-use只读检查确认UNO COM9持续输出`LOCKED/zero=0/frame=0/pulse=0`且所有运动参数为0；Arduino串口监视器已关闭释放COM9，没有发送文本。
 - CanMV状态栏确认COM7连接K230D Lushanpi Lite 128M、固件v1.8-0并正在预览，约35–38 FPS、TRACK、位置约-11.18 cm；但终端无`B,...`镜像，VS Code同时显示1个未保存文件。Agent未擅自保存或覆盖，等待用户先保存编辑器内容后再重新应用/核对USB镜像。
+- 用户确认未保存内容已处理后继续。CanMV已把当前脚本保存为`/sdcard/main.py`；固件v1.8-0实测中，断开IDE和Ctrl+D均不执行启动脚本，`machine.reset()`板级复位后脚本自启动，18秒收到638个严格控制帧。
+- COM7在115200和12M主机配置下各3秒读取114/115个严格帧；当前USB CDC两者均可读，UART2的38400配置不变。短时电脑桥接输入352行、转发282帧，UNO帧号更新至3057且始终LOCKED、zero=0、pulse=0、参数全0，退出后DISARM，没有电机运动。
+- 本次自动启动日志要求在60帧内移走钢珠；远程复位期间没有现场移动钢珠，随后6秒稳态229帧均为state=0。该现象原因仍待现场复测，恢复连续TRACK前不执行ZERO、参数或ARM。桥接期间一次`ERR invalid_vision_frame`同样记录为待复现，未据此修改解析器。
 
 ---
 
